@@ -2,16 +2,17 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom'
 
 import Navbar from './components/Navbar/Navbar'
-import Landing from './components/Pages/Landing/Landing'
+import { Landing } from './components/Pages'
 import './App.css';
 
-function App() {
+const App = () => {
   return (
     <div className="">
       <Navbar />
       <Switch>
-        <Route to='/landing' component={Landing} />
+        <Route exact to='/' component={Landing} />
       </Switch>
+      <footer>Footer</footer>
     </div>
   );
 }
