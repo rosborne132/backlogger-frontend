@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Required } from '../../Utils/Utils'
+import { Button, InputGroup } from '../../Utils/Utils'
 // import AuthApiService from '../../services/auth-api-service'
 
 import './RegistrationForm.css'
@@ -9,15 +9,21 @@ export default class RegistrationForm extends Component {
     onRegistrationSuccess: () => {}
   }
 
-  state = { error: null }
+  state = { 
+    fullName: '',
+    userName: '',
+    password: '',
+    passwordMatch: '',
+    error: null 
+  }
 
   handleSubmit = e => {
     e.preventDefault()
-    const { full_name, password_match, user_name, password } = e.target
-    console.log(full_name.value)
-    console.log(user_name.value)
-    console.log(password.value)
-    console.log(password_match.value)
+    const { fullName, userName, password, passwordMatch } = this.state
+    console.log(fullName)
+    console.log(userName)
+    console.log(password)
+    console.log(passwordMatch)
 
   //   this.setState({ error: null })
   //    AuthApiService.postUser({
@@ -38,8 +44,65 @@ export default class RegistrationForm extends Component {
     this.props.history.push('/app')
   }
 
+  onChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  createInputs = inputs => {
+    return inputs.map(input => {
+      return (
+        <InputGroup 
+          key={input.inputID}
+          labelFor={input.labelFor}
+          labelText={input.labelText}
+          inputType={input.inputType}
+          inputName={input.inputName}
+          inputID={input.inputID}
+          inputValue={input.inputValue}
+          onChange={this.onChange}
+          />
+      )
+    })
+  }
+
   render() {
-    const { error } = this.state
+    const { error, fullName, userName, password, passwordMatch } = this.state
+    const inputs = [
+      {
+        labelFor: 'RegistrationForm__full_name',
+        labelText: 'Full Name',
+        inputType: 'text',
+        inputName: 'fullName',
+        inputID: 'RegistrationForm__full_name',
+        inputValue: fullName
+      },
+      {
+        labelFor: 'RegistrationForm__user_name',
+        labelText: 'User Name',
+        inputType: 'text',
+        inputName: 'userName',
+        inputID: 'RegistrationForm__user_name',
+        inputValue: userName
+      },
+      {
+        labelFor: 'RegistrationForm__password',
+        labelText: 'Password',
+        inputType: 'password',
+        inputName: 'password',
+        inputID: 'RegistrationForm__password',
+        inputValue: password
+      },
+      {
+        labelFor: 'RegistrationForm__password_match',
+        labelText: 'Match Password',
+        inputType: 'password',
+        inputName: 'passwordMatch',
+        inputID: 'RegistrationForm__password_match',
+        inputValue: passwordMatch
+      },
+    ]
     return (
       <form className="RegistrationForm" onSubmit={this.handleSubmit}>
         <fieldset>
@@ -47,22 +110,9 @@ export default class RegistrationForm extends Component {
           <div role="alert">
             {error && <p className="red">{error}</p>}
           </div>
-          <p>
-            <label htmlFor="RegistrationForm__full_name">Full name <Required /></label>
-            <input type="text" name="full_name" id="RegistrationForm__full_name" required />
-          </p>
-          <p>
-            <label htmlFor="RegistrationForm__user_name">User name <Required /></label>
-            <input type="text" name="user_name" id="RegistrationForm__user_name" required />
-          </p>
-          <p>
-            <label htmlFor="RegistrationForm__password">Password <Required /></label>
-            <input type="password" name="password" id="RegistrationForm__password" required />
-          </p>
-          <p>
-            <label htmlFor="RegistrationForm__password_match">Match Password <Required /></label>
-            <input type="password" name="password_match" id="RegistrationForm__password_match" required />
-          </p>
+
+          {this.createInputs(inputs)}
+
           <Button className="signUp" type="submit">Sign Up</Button>
         </fieldset>
       </form>

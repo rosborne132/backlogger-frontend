@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { format as formatDate } from 'date-fns'
 import './Utils.css'
 
@@ -25,6 +25,15 @@ export function Input({ className, ...props }) {
     <input className={['Input', className].join(' ')} {...props} />
   )
 }
+
+export const InputGroup = memo(({ labelFor, labelText, inputType, inputName, inputID, inputValue, onChange }) => {
+  return (
+    <p>
+      <label htmlFor={labelFor}>{labelText} <Required /></label>
+      <input type={inputType} name={inputName} value={inputValue} onChange={onChange} id={inputID} required />
+    </p>
+  )
+})
 
 export function Required({ className, ...props }) {
   return (

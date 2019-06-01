@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import TokenService from '../../services/token-service'
 // import AuthApiService from '../../services/auth-api-service'
-import { Button } from '../../Utils/Utils'
+import { Button, InputGroup } from '../../Utils/Utils'
 import './LoginForm.css'
 
 export default class LoginForm extends Component {
@@ -9,14 +9,18 @@ export default class LoginForm extends Component {
     onLoginSuccess: () => {}
   }
 
-  state = { error: null }
+  state = { 
+    userName: '',
+    password: '',
+    error: null 
+  }
 
   handleSubmitJwtAuth = e => {
     e.preventDefault()
     this.setState({ error: null })
-    const { user_name, password } = e.target
-    console.log(user_name.value)
-    console.log(password.value)
+    const { userName, password } = this.state
+    console.log(userName)
+    console.log(password)
     
     // AuthApiService.postLogin({
     //   user_name: user_name.value,
@@ -34,8 +38,49 @@ export default class LoginForm extends Component {
     this.props.history.push('/app')
   }
 
+  onChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  
+  createInputs = inputs => {
+    return inputs.map(input => {
+      return (
+        <InputGroup 
+          key={input.inputID}
+          labelFor={input.labelFor}
+          labelText={input.labelText}
+          inputType={input.inputType}
+          inputName={input.inputName}
+          inputID={input.inputID}
+          inputValue={input.inputValue}
+          onChange={this.onChange}
+          />
+      )
+    })
+  }
+
   render() {
-    const { error } = this.state
+    const { error, userName, password } = this.state
+    const inputs = [
+      {
+        labelFor: 'RegistrationForm__user_name',
+        labelText: 'User Name',
+        inputType: 'text',
+        inputName: 'userName',
+        inputID: 'RegistrationForm__user_name',
+        inputValue: userName
+      },
+      {
+        labelFor: 'RegistrationForm__password',
+        labelText: 'Password',
+        inputType: 'password',
+        inputName: 'password',
+        inputID: 'RegistrationForm__password',
+        inputValue: password
+      }
+    ]
     return (
       <form className='LoginForm' onSubmit={this.handleSubmitJwtAuth}>
         <fieldset>
@@ -43,14 +88,9 @@ export default class LoginForm extends Component {
           <div role='alert'>
             {error && <p className='red'>{error}</p>}
           </div>
-          <p>
-            <label htmlFor='LoginForm__user_name'>User name</label>
-            <input type="text" name='user_name' id='LoginForm__user_name' required />
-          </p>
-          <p>
-            <label htmlFor='LoginForm__password'>Password</label>
-            <input type="password" name='password' id='LoginForm__password' required />
-          </p>
+
+          {this.createInputs(inputs)}
+          
           <Button type='submit'>Login</Button>
         </fieldset>
       </form>
