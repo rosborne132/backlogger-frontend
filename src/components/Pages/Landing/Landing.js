@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+
+import RegistrationForm from '../Register/RegistrationForm'
+
 import './Landing.css'
 
 class Landing extends Component {
@@ -38,28 +41,7 @@ class Landing extends Component {
                         <header>
                             <h3>Start Logging Games Now!</h3>
                         </header>
-                        <form class='signup-form'>
-                            <fieldset>
-                            <legend>Sign up form</legend>
-                                <p>
-                                    <label for="first-name">First name</label>
-                                    <input placeholder='First Name' type="text" name='first-name' id='first-name' />
-                                </p>
-                                <p>
-                                    <label for="last-name">Last name</label>
-                                    <input type="text" name='last-name' id='last-name' placeholder='Last Name' />
-                                </p>
-                                <p>
-                                    <label for="username">Email</label>
-                                    <input type="text" name='username' id='username' />
-                                </p>
-                                <p>
-                                    <label for="password">Password</label>
-                                    <input type="password" name='password' id='password' />
-                                </p>
-                                <button type='submit'>Sign Up</button>
-                            </fieldset>
-                        </form>
+                        <RegistrationForm />
                     </section>
                 </main>
             </>

@@ -1,6 +1,5 @@
 main {
-    font-family: "Open Sans",
-    sans-serif; 
+    font-family: "Open Sans", sans-serif; 
     font-size: 20px;
     color: #444;
     text-align: center;
@@ -20,8 +19,10 @@ main {
     background-image: url('../../../assets//images/lorenzo-herrera-1383917-unsplash.jpg');
 }
 
-h1 {
+#landingHeader h1 {
     color: #fff;
+    font-weight: 700;
+    font-size: 60px;
 }
 
 header {
@@ -30,7 +31,7 @@ header {
   
 section {
     min-height: 200px;
-    padding: 6% 0;
+    padding: 4% 0;
 }
 
 #signUp {
@@ -40,35 +41,6 @@ section {
 #signUp h3 {
     color: #fff;
 }
-
-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 5px; 
-    box-shadow: 2px 2px 1px 2px #000;
-}
-
-fieldset {
-    max-width: 40%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    border: none;
-}
-
-label {
-    display: flex;
-    justify-content: flex-start;
-}
-
-input {
-    display: flex;
-    justify-content: flex-start;
-}
-
-
 
 section:nth-child(even) {
     background-color: #ddd;
