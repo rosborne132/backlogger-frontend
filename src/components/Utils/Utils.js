@@ -1,13 +1,9 @@
-import React, { memo } from 'react'
+import React, { memo, PureComponent } from 'react'
 import { format as formatDate } from 'date-fns'
 import './Utils.css'
 
 export function NiceDate({ date, format='Do MMMM YYYY' }) {
   return formatDate(date, format)
-}
-
-export function Hyph() {
-  return <span className='Hyph'>{' - '}</span>
 }
 
 export function Button({ className, ...props }) {
@@ -43,13 +39,24 @@ export function Required({ className, ...props }) {
   )
 }
 
-export function Section({ className, list, ...props }) {
-  const classes = [
-    'Section',
-    list && 'Section--list',
-    className,
-  ].filter(Boolean).join(' ')
-  return (
-    <section className={classes} {...props} />
-  )
+export class GameError extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasError: false
+    };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+  render() {
+    const { hasError } = this.state
+    const { children } = this.props
+    if (hasError) {
+      return <h2>Could not display game. :(</h2>
+    } else {
+      return children
+    }
+  }
 }

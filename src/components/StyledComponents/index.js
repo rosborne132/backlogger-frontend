@@ -1,15 +1,22 @@
-import { Button, LinkButton, ListButton, FormSubmitButton } from "./Buttons";
-import { NoteItem, NoteStyles, NoteHeader } from "./NoteStyles";
-import { Console, List } from "./FolderStyles";
+import { Button, LinkButton, ListButton, FormSubmitButton } from './Buttons'
+import { GameIcons, GameItem, GameStyles, GameHeader, GameBody, GameGrid } from './GameStyles'
+import { Console, List } from './ConsoleStyles'
+import { appHomeContainer, appNav, appMain } from './App'
 
 export {
+  appHomeContainer,
+  appNav,
+  appMain,
   Button,
   ListButton,
   LinkButton,
   FormSubmitButton,
-  NoteItem,
-  NoteStyles,
-  NoteHeader,
+  GameBody,
+  GameGrid,
+  GameIcons,
+  GameItem,
+  GameStyles,
+  GameHeader,
   Console,
   List
 };

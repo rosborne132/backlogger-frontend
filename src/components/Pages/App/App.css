@@ -9,12 +9,8 @@
     background-color: #fff;
 }
   
-nav * {
-    text-decoration: none;
-    display: block;
-}
   
-main {
+.appMain {
     flex: 3;
     margin: 10px 50px;
 }

@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import React, { PureComponent } from 'react'
+import { NavLink, Link } from 'react-router-dom'
 
-import { LinkButton, Console, List } from "../StyledComponents/";
+import { LinkButton, Console, List } from '../../StyledComponents'
 
-import GamesContext from '../../context/GamesContext';
+import GamesContext from '../../../context/GamesContext'
 
 class ConsoleList extends PureComponent{
     static contextType = GamesContext;
@@ -16,7 +16,7 @@ class ConsoleList extends PureComponent{
                 <List>
                     {consoles.map(console => (
                         <Console key={console.id}>
-                            <NavLink to={`console/${console.id}`}>
+                            <NavLink to={`/app/console/${console.id}`}>
                                 <span>{countNotesForFolder(games, console.id)}</span>
                                 <span>{console.name}</span>
                             </NavLink>
@@ -25,7 +25,7 @@ class ConsoleList extends PureComponent{
                 </List>
 
                 <LinkButton>
-                    <Link to="app/add-console">+ Console</Link>
+                    <Link to="/app/addConsole">+ Console</Link>
                 </LinkButton>
             </>
         )

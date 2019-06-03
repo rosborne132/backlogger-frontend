@@ -1,9 +1,3 @@
-
-.Hyph {
-  margin-right: 5px;
-  margin-left: 5px;
-}
-
 .Input,
 .Textarea {
   display: flex;
@@ -36,13 +30,4 @@
   color: #CA1551;
   font-family: Arial;
   font-weight: bold;
-}
-
-.Section {
-  margin-left: 20px;
-  margin-right: 20px;
-}
-.Section--list {
-  margin-left: 10px;
-  margin-right: 10px;
 }

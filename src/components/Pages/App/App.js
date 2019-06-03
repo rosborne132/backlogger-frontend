@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch } from 'react-router-dom'
 
-import ConsoleList from '../../ConsoleList/ConsoleList'
+import { ConsoleList, ConsolePageNav } from '../../SideNav'
+import { GamePageMain } from '../../Pages'
 
 import GamesContext from '../../../context/GamesContext'
 
@@ -63,35 +64,49 @@ class App extends Component {
         };
     }
 
+    createConsoleNav = () => {
+        return (
+            <>
+                <nav className="appNav">
+                    <Switch>
+                        <Route exact path="/app" component={ConsoleList} />
+                        <Route path="/app/console/:consoleId" component={ConsoleList} />
+                        <Route path="/app/note/:noteId" component={ConsolePageNav} />
+                        <Route path="/app/addConsole" component={ConsolePageNav} />
+                        <Route path="/app/addNote" component={ConsolePageNav} />
+                        <Route path="/app/updateNote/:noteId" component={ConsolePageNav} />
+                    </Switch>
+                </nav>
+            </>
+        )
+    }
+
+    createConsoleMain = () => {
+        return (
+            <>
+                <main className="appMain">
+                    <Switch>
+                        <Route exact path="/app" component={GamePageMain} />
+                        <Route path="/app/console/:consoleId" component={GamePageMain} />
+                        {/* <Route path="/app/note/:noteId" component={NotePageMain} /> */}
+                        {/* <Route path="/app/add-folder" component={AddFolder} />
+                        <Route path="/app/add-note" component={AddNote} />
+                        <Route path="/app/update-note/:noteId" component={EditNote} /> */}
+                    </Switch>
+                </main>
+            </>
+        )
+    }
+
     render() {
         const { consoles, games } = this.state
+        const contextValue = { consoles, games }
 
-        const contextValue = { 
-            consoles,
-            games
-        }
         return (
             <GamesContext.Provider value={contextValue}>
                 <div className="appHomeContainer">
-                    <nav className="appNav">
-                        <Switch>
-                            <Route exact path="/app" component={ConsoleList} />
-                            <Route path="/app/console/:consoleId" component={ConsoleList} />
-                            {/* <Route path="/note/:noteId" component={NotePageNav} />
-                            <Route path="/add-folder" component={NotePageNav} />
-                            <Route path="/add-note" component={NotePageNav} />
-                            <Route path="/update-note/:noteId" component={NotePageNav} /> */}
-                        </Switch>
-                    </nav>
-
-                    <main className="appMain">
-                        {/* <Route exact path="/" component={NoteListMain} />
-                        <Route path="/folder/:folderId" component={NoteListMain} />
-                        <Route path="/note/:noteId" component={NotePageMain} />
-                        <Route path="/add-folder" component={AddFolder} />
-                        <Route path="/add-note" component={AddNote} />
-                        <Route path="/update-note/:noteId" component={EditNote} /> */}
-                    </main>
+                    {this.createConsoleNav()}
+                    {this.createConsoleMain()}
                 </div>
             </GamesContext.Provider>
         )
