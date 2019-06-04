@@ -1,12 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component, Suspense } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import { ConsoleList, ConsolePageNav } from '../../SideNav'
-import { GamePageMain } from '../../Pages'
 
 import GamesContext from '../../../context/GamesContext'
 
 import './App.css'
+
+const GamePageMain  = React.lazy(() => import('../GamePageMain/GamePageMain'))
+const GameCompletedMain  = React.lazy(() => import('../GameCompletedMain/GameCompletedMain'))
+const GameDetailsPage  = React.lazy(() => import('../GameDetailsPage/GameDetailsPage'))
+const AddConsoleForm  = React.lazy(() => import('../AddConsoleForm/AddConsoleForm'))
 
 class App extends Component {
     constructor(props) {
@@ -33,7 +37,8 @@ class App extends Component {
                 "name": "The Legend of Zelda",
                 "timeToComplete": "1-10hrs",
                 "notes": "Looking forward to playing this game",
-                "currentGame": false
+                "currentGame": false,
+                "isCompleted": true
             },
             {
                 "id": "d26e0034-ffaf-11e8-8eb2-f2801f1b9fd1",
@@ -41,7 +46,8 @@ class App extends Component {
                 "name": "Octopath Traveler",
                 "timeToComplete": "50-60hrs",
                 "notes": "I've had this game for almost and gotten about 30% through. It's time to finish this game!",
-                "currentGame": true
+                "currentGame": true,
+                "isCompleted": false
             },
             {
                 "id": "d26e01a6-ffaf-11e8-8eb2-f2801f1b9fd1",
@@ -49,7 +55,8 @@ class App extends Component {
                 "name": "Wario Land 4",
                 "timeToComplete": "1-10hrs",
                 "content": "I've already played this game, but I loved it so much that I gotta play it again!",
-                "currentGame": false
+                "currentGame": false,
+                "isCompleted": true
             },
             {
                 "id": "d26e0570-ffaf-11e8-8eb2-f2801f1b9fd1",
@@ -57,7 +64,8 @@ class App extends Component {
                 "name": "Super Mario Bros 2",
                 "timeToComplete": "1-10hrs",
                 "content": "I really like the first Mario, so I'm looking forward to playing this!",
-                "currentGame": false
+                "currentGame": false,
+                "isCompleted": false
             },
           ],
           error: ""
@@ -71,7 +79,8 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/app" component={ConsoleList} />
                         <Route path="/app/console/:consoleId" component={ConsoleList} />
-                        <Route path="/app/note/:noteId" component={ConsolePageNav} />
+                        <Route path="/app/console" component={ConsoleList} />
+                        <Route path="/app/game/:gameId" component={ConsolePageNav} />
                         <Route path="/app/addConsole" component={ConsolePageNav} />
                         <Route path="/app/addNote" component={ConsolePageNav} />
                         <Route path="/app/updateNote/:noteId" component={ConsolePageNav} />
@@ -85,14 +94,17 @@ class App extends Component {
         return (
             <>
                 <main className="appMain">
-                    <Switch>
-                        <Route exact path="/app" component={GamePageMain} />
-                        <Route path="/app/console/:consoleId" component={GamePageMain} />
-                        {/* <Route path="/app/note/:noteId" component={NotePageMain} /> */}
-                        {/* <Route path="/app/add-folder" component={AddFolder} />
-                        <Route path="/app/add-note" component={AddNote} />
-                        <Route path="/app/update-note/:noteId" component={EditNote} /> */}
-                    </Switch>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Switch>
+                            <Route exact path="/app" component={GamePageMain} />
+                            <Route path="/app/console/:consoleId" component={GamePageMain} />
+                            <Route path="/app/console" component={GameCompletedMain} />
+                            <Route path="/app/game/:gameId" component={GameDetailsPage} />
+                            <Route path="/app/addConsole" component={AddConsoleForm} />
+                            {/* <Route path="/app/addGame" component={AddNote} /> */}
+                            {/* <Route path="/app/updateGame/:gameId" component={EditNote} /> */}
+                        </Switch>
+                    </Suspense>
                 </main>
             </>
         )

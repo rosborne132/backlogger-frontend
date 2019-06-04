@@ -1,29 +1,28 @@
 import React, { PureComponent, Suspense } from 'react'
-// import PropTypes from 'prop-types'
 
 import { GameError } from '../../Utils/Utils'
 import { List, GameItem, GameGrid } from '../../StyledComponents'
 
-
 import GamesContext from '../../../context/GamesContext'
 const Game = React.lazy(() => import('../../Game/Game'))
 
-class GamePageMain extends PureComponent {
+class GameCompletedMain extends PureComponent {
     static contextType = GamesContext;
     render() {
-        const getGamesForConsole = (games = [], consoleId) => !consoleId ? games : games.filter(game => game.consoleID === consoleId);   
+        const getCompletedGames = (games = []) => games.filter(game => game.isCompleted === true);   
 
-        const { consoleId } = this.props.match.params;
         const { games } = this.context
-        const gamesFromConsole = getGamesForConsole(games, consoleId);
+        const gamesCompleted = getCompletedGames(games);
+        console.log(gamesCompleted)
+        console.log(getCompletedGames)
         return (
             <>
                 <GameError>
-                    <h1>Game list page</h1>
+                    <h1>Completed Games</h1>
                     
                     <List>
                         <GameGrid>
-                            {gamesFromConsole.map(game => (
+                            {gamesCompleted.map(game => (
                                 <GameItem key={game.id}>
                                     <Suspense fallback={<div>Loading...</div>}>
                                         <Game 
@@ -41,4 +40,4 @@ class GamePageMain extends PureComponent {
     }
 }
 
-export default GamePageMain
+export default GameCompletedMain

@@ -60,3 +60,13 @@ export class GameError extends PureComponent {
     }
   }
 }
+
+export const ValidationError = memo(({ message }) => {
+  return (
+    <>
+      <span className="error">
+        <p>{message}</p>
+      </span>
+    </>
+  )
+})

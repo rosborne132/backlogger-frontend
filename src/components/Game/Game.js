@@ -34,6 +34,7 @@ class Game extends PureComponent {
     //     console.error({ error });
     //   });
   };
+
   render() {
     const { id, name } = this.props;
     return (
