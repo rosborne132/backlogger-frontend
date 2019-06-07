@@ -17,13 +17,32 @@ class GameDetailsPage extends Component {
     const { gameId } = this.props.match.params;
     const game = findGame(games, gameId) || { content: "" };
     return (
-      <section className="NotePageMain">
+      <main>
+        <header className="parallax">
+          <h1>{game.name}</h1>
+        </header>
+        <section>
+          <header>
+            <h3>screenshots</h3>
+          </header>
+        </section>
+        <section>
+          <header>
+            <h3>Keep track of the games you want to play</h3>
+          </header>
+          <p>game storyline</p>
+          <p>game age_rating</p>
+          <p>game time_to_beat</p>
+          <p>game total rating</p>
+        </section>
         <Game
           id={game.id}
           name={game.name}
           onDeleteNote={this.handleDeleteGame}
         />
-      </section>
+
+        <p>similar games</p>
+      </main>
     );
   }
 }

@@ -18,8 +18,6 @@ class GameCompletedMain extends PureComponent {
         return (
             <>
                 <GameError>
-                    <h1>Completed Games</h1>
-                    
                     <List>
                         <GameGrid>
                             {gamesCompleted.map(game => (

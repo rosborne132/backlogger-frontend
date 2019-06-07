@@ -10,8 +10,9 @@ class ConsoleList extends PureComponent{
     render() {
         const { consoles, games } = this.context
 
-        const countNotesForFolder = (games = [], consoleID) => games.filter(game => game.consoleID === consoleID).length
+        const countGamesForConsole = (games = [], consoleId) => games.filter(game => game.consoleId === consoleId && game.isCompleted !== true).length
         const countCompletedGames = (games = []) => games.filter(game => game.isCompleted === true).length
+        console.log(games)
         return (
             <>
                 <List>
@@ -30,7 +31,7 @@ class ConsoleList extends PureComponent{
                     {consoles.map(console => (
                         <Console key={console.id}>
                             <NavLink to={`/app/console/${console.id}`}>
-                                <span>{countNotesForFolder(games, console.id)}</span>
+                                <span>{countGamesForConsole(games, console.id)}</span>
                                 <span>{console.name}</span>
                             </NavLink>
                         </Console>
