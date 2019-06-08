@@ -27,6 +27,7 @@ label {
 }
 
 input {
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     padding: 10px;
@@ -38,4 +39,36 @@ input {
 .signUp {
     color: #fff;
     background-color: #000;
+}
+
+@media only screen and (max-width: 500px) {
+    form {
+        max-width: 300px;
+    }
+
+    input {
+        width: 50%;
+        justify-content: center;
+    }
+
+    label {
+        width: 50%;
+        justify-content: center;
+    }
+
+    select {
+        display: flex;
+        justify-content: center;
+    }
+
+    textarea {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    form {
+        max-width: 175px;
+    }
 }

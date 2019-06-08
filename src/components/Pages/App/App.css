@@ -9,8 +9,22 @@
     background-color: #fff;
 }
   
-  
 .appMain {
     flex: 3;
     margin: 10px 50px;
 }
+
+@media only screen and (max-width: 500px) {
+    .appMain {
+        flex: 3;
+        margin: 0 40px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .appMain {
+        flex: 3;
+        margin: 0 30px;
+    }
+}
+

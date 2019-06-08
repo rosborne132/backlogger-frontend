@@ -144,7 +144,7 @@ class AddGameForm extends Component {
                 type="text"
                 placeholder="Enter Note Name"
                 id="name"
-                onChange={e => this.updateName(e.target.value)}
+                onChange={this.updateName}
               />
             </p>
 

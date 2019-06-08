@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import Game from '../../Game/Game'
-
 import GamesContext from '../../../context/GamesContext'
 
 class GameDetailsPage extends Component {
@@ -35,11 +33,6 @@ class GameDetailsPage extends Component {
           <p>game time_to_beat</p>
           <p>game total rating</p>
         </section>
-        <Game
-          id={game.id}
-          name={game.name}
-          onDeleteNote={this.handleDeleteGame}
-        />
 
         <p>similar games</p>
       </main>

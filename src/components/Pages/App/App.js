@@ -8,7 +8,7 @@ import GamesContext from '../../../context/GamesContext'
 import './App.css'
 
 const GamePageMain  = React.lazy(() => import('../GamePageMain/GamePageMain'))
-const AllGamesPageMain  = React.lazy(() => import('../AllGamesPageMain/AlllGamesPageMain'))
+const AllGamesPageMain  = React.lazy(() => import('../AllGamesPageMain/AllGamesPageMain'))
 const GameCompletedMain  = React.lazy(() => import('../GameCompletedMain/GameCompletedMain'))
 const GameDetailsPage  = React.lazy(() => import('../GameDetailsPage/GameDetailsPage'))
 const AddConsoleForm  = React.lazy(() => import('../AddConsoleForm/AddConsoleForm'))

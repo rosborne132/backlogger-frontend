@@ -63,8 +63,4 @@ Game.propTypes = {
   name: PropTypes.string.isRequired,
 }
 
-Game.defaultProps = {
-  onDeleteGame: () => {}
-}
-
 export default Game

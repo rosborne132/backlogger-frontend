@@ -31,6 +31,10 @@ export const GameGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
+
+  @media only screen and (max-width: 500px) {
+    grid-template-columns: 1fr;
+}
 `
 export const GameIcons = styled.div`
   display: flex;
