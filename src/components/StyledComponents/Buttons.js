@@ -47,6 +47,10 @@ export const FormSubmitButton = styled.button`
     color: #fff;
     cursor: pointer;
   }
+
+  @media only screen and (max-width: 500px) {
+    width: 100%
+  };
 `
 
 export const ListButton = styled.div`

@@ -113,7 +113,7 @@ class AddConsoleForm extends Component {
       name: consoleName,
     }
     this.context.addConsole(newConsole)
-    this.props.history.push(`/app/console/:${newConsole.consoleId}`)
+    this.props.history.push(`/app`)
     // fetch(`${config.FOLDER_API_ENDPOINT}`, {
     //   method: "post",
     //   headers: {
