@@ -10,40 +10,40 @@ class ConsoleList extends PureComponent{
     render() {
         const { consoles, games } = this.context
 
+        const getAllUncompletedGames= (games = []) => games.filter(game => game.isCompleted !== true).length
         const countGamesForConsole = (games = [], consoleId) => games.filter(game => game.consoleId === consoleId && game.isCompleted !== true).length
         const countCompletedGames = (games = []) => games.filter(game => game.isCompleted === true).length
-        console.log(games)
         return (
             <>
                 <List>
-                    <Console>
-                        <NavLink to={`/app`}>
-                            <span>{games.length}</span>
+                    <NavLink to={`/app`}>
+                        <Console>
+                            <span>{getAllUncompletedGames(games)}</span>
                             <span>All Games</span>
-                        </NavLink>
-                    </Console>
-                    <Console>
-                        <NavLink to={`/app/console`}>
+                        </Console>
+                    </NavLink>
+                    <NavLink to={`/app/console`}>
+                        <Console>
                             <span>{countCompletedGames(games)}</span>
                             <span>Completed Games</span>
-                        </NavLink>
-                    </Console>
+                        </Console>
+                    </NavLink>
                     {consoles.map(console => (
-                        <Console key={console.id}>
-                            <NavLink to={`/app/console/${console.id}`}>
+                        <NavLink to={`/app/console/${console.id}`} key={console.id}>
+                            <Console>
                                 <span>{countGamesForConsole(games, console.id)}</span>
                                 <span>{console.name}</span>
-                            </NavLink>
-                        </Console>
+                            </Console>
+                        </NavLink>
                     ))}
                 </List>
 
-                <LinkButton>
-                    <Link to="/app/addConsole">+ Console</Link>
-                </LinkButton>
-                <LinkButton>
-                    <Link to="/app/addGame">+ Game</Link>
-                </LinkButton>
+                <Link style={{textDecoration: "none"}} to="/app/addConsole">
+                    <LinkButton>+ Console</LinkButton>
+                </Link>
+                <Link style={{textDecoration: "none"}} to="/app/addGame">
+                    <LinkButton>+ Game</LinkButton>
+                </Link>
             </>
         )
     }

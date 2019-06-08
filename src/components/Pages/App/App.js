@@ -60,7 +60,7 @@ class App extends Component {
                 "timeToComplete": "1-10hrs",
                 "notes": "I've already played this game, but I loved it so much that I gotta play it again!",
                 "currentGame": false,
-                "isCompleted": true
+                "isCompleted": false
             },
             {
                 "id": "d26e0570-ffaf-11e8-8eb2-f2801f1b9fd1",
@@ -103,7 +103,6 @@ class App extends Component {
     handleDeleteGame = gameId => {
         const { games } = this.state
         const newGames = games.filter(game => game.id !== gameId)
-        console.log(newGames)
         this.setState({
             games: newGames
         })

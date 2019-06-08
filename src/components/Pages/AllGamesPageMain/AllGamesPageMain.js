@@ -11,15 +11,13 @@ const Game = React.lazy(() => import('../../Game/Game'))
 class AllGamesPageMain extends PureComponent {
     static contextType = GamesContext
     render() {
-        const getGamesForConsole = (games = [], consoleId) => !consoleId ? games : games.filter(game => game.consoleID === consoleId)  
+        const getGamesForConsole = (games = []) => games.filter(game => game.currentGame !== true && game.isCompleted !== true)     
         const getCurrentGame = (games = []) => games.filter(game => game.currentGame === true) 
         
-        const { consoleId } = this.props.match.params
         const { games } = this.context
         
-        const gamesFromConsole = getGamesForConsole(games, consoleId)
+        const gamesFromConsole = getGamesForConsole(games)
         const currentGame = getCurrentGame(games)
-        console.log(currentGame)
         return (
             <>
                 <GameError>

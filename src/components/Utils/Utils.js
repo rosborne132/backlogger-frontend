@@ -1,5 +1,6 @@
 import React, { memo, PureComponent } from 'react'
 import { format as formatDate } from 'date-fns'
+import { Label, Input } from "../StyledComponents"
 import './Utils.css'
 
 export function NiceDate({ date, format='Do MMMM YYYY' }) {
@@ -10,23 +11,11 @@ export function Button({ className, ...props }) {
   return <button className={['Button', className].join(' ')} {...props} />
 }
 
-export function Textarea({ className, ...props }) {
-  return (
-    <textarea className={['Textarea', className].join(' ')} {...props} />
-  )
-}
-
-export function Input({ className, ...props }) {
-  return (
-    <input className={['Input', className].join(' ')} {...props} />
-  )
-}
-
 export const InputGroup = memo(({ labelFor, labelText, inputType, inputName, inputID, inputValue, onChange }) => {
   return (
     <p>
-      <label htmlFor={labelFor}>{labelText} <Required /></label>
-      <input type={inputType} name={inputName} value={inputValue} onChange={onChange} id={inputID} required />
+      <Label htmlFor={labelFor}>{labelText} <Required /></Label>
+      <Input type={inputType} name={inputName} value={inputValue} onChange={onChange} id={inputID} required />
     </p>
   )
 })

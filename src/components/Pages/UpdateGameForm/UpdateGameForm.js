@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { FormSubmitButton } from "../../StyledComponents"
+import { Checkbox, FormSubmitButton, Form, Fieldset, Legend, Label, Input, Select, Textarea } from "../../StyledComponents"
 import { ValidationError } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
@@ -10,11 +10,11 @@ class UpdateGameForm extends Component {
   constructor() {
     super();
     this.state = {
-      name: "Octopath",
-      consoleId: "b07161a6-ffaf-11e8-8eb2-f2801f1b9fd1",
-      currentGame: true,
-      notes: "Update test notes",
-      updateGameTime: "10-20hrs",
+      name: "",
+      consoleId: "",
+      currentGame: false,
+      notes: "",
+      updateGameTime: "",
       nameValid: false,
       consoleValid: false,
       formValid: false,
@@ -28,6 +28,12 @@ class UpdateGameForm extends Component {
 
   componentDidMount() {
     const gameId = this.props.match.params.gameId
+    console.log(gameId)
+    const gameToUpdate = this.context.games.filter(game => game.id === gameId)
+    console.log(gameToUpdate)
+    const { consoleId, currentGame, id, name, notes, timeToComplete } = gameToUpdate[0]
+
+    this.setState({consoleId, currentGame, id, name, notes, timeToComplete})
     // fetch(`${config.NOTE_API_ENDPOINT}/${noteId}`, {
     //   method: 'GET'
     // })
@@ -154,16 +160,16 @@ class UpdateGameForm extends Component {
 
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
-          <legend style={{display: "flex", justifyContent: "center"}}>Update game!</legend>
+        <Form onSubmit={this.handleSubmit}>
+          <Legend style={{display: "flex", justifyContent: "center"}}>Update game!</Legend>
           <ValidationError
             hasError={!this.state.nameValid}
             message={this.state.validationMessages.name}
           />
-          <fieldset>
+          <Fieldset>
             <p>
-              <label htmlFor="name">Name: </label>
-              <input
+              <Label htmlFor="name">Name: </Label>
+              <Input
                 type="text"
                 placeholder="Enter Note Name"
                 id="name"
@@ -173,40 +179,40 @@ class UpdateGameForm extends Component {
             </p>
 
             <p>
-              <label htmlFor="console">Console: </label>
-              <select name="console" value={consoleId} onChange={this.updateConsole}>
+              <Label htmlFor="console">Console: </Label>
+              <Select name="console" value={consoleId} onChange={this.updateConsole}>
                 {consoles.map(console => (
                   <option key={console.id} value={console.id}>{console.name}</option>
                 ))}
-              </select>
+              </Select>
             </p>
 
             <p>
-              <label htmlFor="gameConsole">Time Expected to Complete</label>
-                <select name="gameConsole" value={updateGameTime} onChange={this.updateGameTime}>
+              <Label htmlFor="gameConsole">Time Expected to Complete:</Label>
+                <Select name="gameConsole" value={updateGameTime} onChange={this.updateGameTime}>
                   <option value="1-10hrs">1-10hrs</option>
                   <option value="10-20hrs">10-20hrs</option>
                   <option value="20-30hrs">20-30hrs</option>
                   <option value="30-40hrs">30-40hrs</option>
                   <option value="50-60hrs">50-60hrs</option>
-                </select>
+                </Select>
             </p>
 
             <p>
-              <label htmlFor="notes">Notes: </label>
-              <textarea value={notes} onChange={this.updateContent} />
+              <Label htmlFor="notes">Notes: </Label>
+              <Textarea value={notes} onChange={this.updateContent} />
             </p>
 
             <p style={{display: "flex", justifyContent: "space-between"}}>
-              <label htmlFor="currentGame">Current Game</label>
-              <input 
+              <Label htmlFor="currentGame">Current Game:</Label>
+              <Checkbox 
                 type="checkbox"
                 name="currentGame"
                 checked={currentGame}
                 onChange={this.updateCurrentGame}
                 />
             </p>
-          </fieldset>
+          </Fieldset>
           <FormSubmitButton
             style={{ margin: "5px auto" }}
             buttonWidth="50%"
@@ -214,7 +220,7 @@ class UpdateGameForm extends Component {
           >
             Submit
           </FormSubmitButton>
-        </form>
+        </Form>
       </>
     );
   }

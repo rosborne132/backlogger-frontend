@@ -15,8 +15,8 @@ class Game extends PureComponent {
 
   handleDeleteGame = e => {
     e.preventDefault()
-    const { id, name } = this.props
-    console.log(`${name}: ${id}`)
+    const { id } = this.props
+    // console.log(`${name}: ${id}`)
     this.context.deleteGame(id)
     // fetch(`${config.NOTE_API_ENDPOINT}/${noteId}`, {
     //   method: "DELETE",
@@ -50,9 +50,6 @@ class Game extends PureComponent {
             <Link to={`#`} onClick={this.handleDeleteNote}><FontAwesomeIcon onClick={this.handleDeleteGame} icon={faMinusSquare} /></Link>
             <Link to={`/app/updateGame/${id}`}><FontAwesomeIcon icon={faPenSquare} /></Link>
         </GameIcons>
-        
-        
-        
       </GameStyles>
     )
   }

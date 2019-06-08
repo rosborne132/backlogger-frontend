@@ -38,6 +38,11 @@ section {
     background-image: url('../../../assets//images/rhett-noonan-274786-unsplash.jpg');
 }
 
+.signUp {
+    color: #fff;
+    background-color: #000;
+}
+
 #signUp h3 {
     color: #fff;
 }

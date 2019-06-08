@@ -13,8 +13,6 @@ class GameCompletedMain extends PureComponent {
 
         const { games } = this.context
         const gamesCompleted = getCompletedGames(games);
-        console.log(gamesCompleted)
-        console.log(getCompletedGames)
         return (
             <>
                 <GameError>

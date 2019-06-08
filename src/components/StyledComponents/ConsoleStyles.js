@@ -10,13 +10,13 @@ export const Console = styled.li`
     padding: 4px;
   }
 
-  a {
+  span {
     color: #000;
   }
 
   :hover {
     background-color: #000;
-    a {
+    span {
       color: #fff;
     }
   }

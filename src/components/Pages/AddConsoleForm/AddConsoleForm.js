@@ -1,7 +1,7 @@
 import React, { Component } from "react"
-import axios from 'axios'
+// import axios from 'axios'
 
-import { FormSubmitButton } from "../../StyledComponents"
+import { FormSubmitButton, Form, Fieldset, Legend, Select } from "../../StyledComponents"
 import { ValidationError } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
@@ -19,6 +19,10 @@ class AddConsoleForm extends Component {
         {
           id: "29345-sdf234",
           name: "Select your console"
+        },
+        {
+          "id": "b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1",
+          "name": "NES"
         },
         {
           id: "sdfgkljhweriuysdf-fghrty",
@@ -108,7 +112,6 @@ class AddConsoleForm extends Component {
       id: consoleId,
       name: consoleName,
     }
-    console.log(newConsole)
     this.context.addConsole(newConsole)
     this.props.history.push(`/app/console/:${newConsole.consoleId}`)
     // fetch(`${config.FOLDER_API_ENDPOINT}`, {
@@ -138,18 +141,20 @@ class AddConsoleForm extends Component {
 
   render() {
     const { consoleOptions } = this.state
+    const { consoles } = this.context
+    const consoleChoices = consoleOptions.filter(consoleOption => !consoles.some(console => console.id === consoleOption.id))
     return (
       <>
-        <form onSubmit={e => this.handleSubmit(e)}>
-          <legend style={{display: "flex", justifyContent: "center"}}>Add a Console</legend>
+        <Form onSubmit={e => this.handleSubmit(e)}>
+          <Legend style={{display: "flex", justifyContent: "center"}}>Add a Console</Legend>
           <ValidationError
             hasError={!this.state.consoleOptions}
           />
-          <fieldset>
-            <select onChange={this.updateConsole}>
-              {consoleOptions.map(consoleOption => <option key={consoleOption.id} value={consoleOption.name}>{this.capitalize(consoleOption.name)}</option>)}
-            </select>
-          </fieldset>
+          <Fieldset>
+            <Select onChange={this.updateConsole}>
+              {consoleChoices.map(consoleChoice => <option key={consoleChoice.id} value={consoleChoice.name}>{this.capitalize(consoleChoice.name)}</option>)}
+            </Select>
+          </Fieldset>
           <FormSubmitButton
             style={{ margin: "5px auto" }}
             buttonWidth="50%"
@@ -158,7 +163,7 @@ class AddConsoleForm extends Component {
           >
             Submit
           </FormSubmitButton>
-        </form>
+        </Form>
       </>
     )
   }

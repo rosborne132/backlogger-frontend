@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import uuid from 'uuid'
 
-import { FormSubmitButton } from "../../StyledComponents"
+import { Checkbox, FormSubmitButton, Form, Fieldset, Legend, Label, Input, Select, Textarea } from "../../StyledComponents"
 import { ValidationError } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
@@ -27,10 +27,12 @@ class AddGameForm extends Component {
 
   static contextType = GamesContext
 
-  updateName = name =>
+  updateName = e => {
+    const name = e.target.value
     this.setState({ name }, () => {
-      this.validateName(name)
+      this.validateName(name) 
     })
+  }
 
   updateConsole = e => {
     let hasError = false
@@ -103,7 +105,6 @@ class AddGameForm extends Component {
       currentGame,
       isCompleted: false
     }
-    console.log(game)
     this.context.addGame(game)
     this.props.history.push(`/app/console/${game.consoleId}`)
     // fetch(`${config.NOTE_API_ENDPOINT}`, {
@@ -131,16 +132,16 @@ class AddGameForm extends Component {
 
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
-          <legend style={{display: "flex", justifyContent: "center"}}>Add a new game to play!</legend>
+        <Form onSubmit={this.handleSubmit}>
+          <Legend style={{display: "flex", justifyContent: "center"}}>Add a new game to play!</Legend>
           <ValidationError
             hasError={!this.state.nameValid}
             message={this.state.validationMessages.name}
           />
-          <fieldset>
+          <Fieldset>
             <p>
-              <label htmlFor="name">Name: </label>
-              <input
+              <Label htmlFor="name">Name: </Label>
+              <Input
                 type="text"
                 placeholder="Enter Note Name"
                 id="name"
@@ -149,42 +150,42 @@ class AddGameForm extends Component {
             </p>
 
             <p>
-              <label htmlFor="console">Console: </label>
-              <select name="console" onChange={this.updateConsole}>
+              <Label htmlFor="console">Console: </Label>
+              <Select name="console" onChange={this.updateConsole}>
                 <option >Select your console</option>
                 {consoles.map(console => (
                   <option key={console.id} value={console.name}>{console.name}</option>
                 ))}
-              </select>
+              </Select>
             </p>
 
             <p>
-              <label htmlFor="gameConsole">Time Expected to Complete</label>
-                <select name="gameConsole" onChange={this.updateGameTime}>
+              <Label htmlFor="gameConsole">Time Expected to Complete:</Label>
+                <Select name="gameConsole" onChange={this.updateGameTime}>
                   <option>Select your time</option>
                   <option value="1-10hrs">1-10hrs</option>
                   <option value="10-20hrs">10-20hrs</option>
                   <option value="20-30hrs">20-30hrs</option>
                   <option value="30-40hrs">30-40hrs</option>
                   <option value="50-60hrs">50-60hrs</option>
-                </select>
+                </Select>
             </p>
 
             <p>
-              <label htmlFor="notes">Notes: </label>
-              <textarea onChange={this.updateContent} />
+              <Label htmlFor="notes">Notes: </Label>
+              <Textarea onChange={this.updateContent} />
             </p>
 
             <p style={{display: "flex", justifyContent: "space-between"}}>
-              <label htmlFor="currentGame">Current Game</label>
-              <input 
+              <Label htmlFor="currentGame">Current Game:</Label>
+              <Checkbox 
                 type="checkbox"
                 name="currentGame"
                 checked={this.state.currentGame}
                 onChange={this.updateCurrentGame}
                 />
             </p>
-          </fieldset>
+          </Fieldset>
           <FormSubmitButton
             style={{ margin: "5px auto" }}
             buttonWidth="50%"
@@ -193,7 +194,7 @@ class AddGameForm extends Component {
           >
             Submit
           </FormSubmitButton>
-        </form>
+        </Form>
       </>
     )
   }

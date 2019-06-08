@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 // import TokenService from '../../services/token-service'
 // import AuthApiService from '../../services/auth-api-service'
+
+import { Form, Fieldset, Legend } from "../../StyledComponents"
 import { Button, InputGroup } from '../../Utils/Utils'
-import './LoginForm.css'
 
 export default class LoginForm extends Component {
   static defaultProps = {
@@ -18,9 +19,7 @@ export default class LoginForm extends Component {
   handleSubmitJwtAuth = e => {
     e.preventDefault()
     this.setState({ error: null })
-    const { userName, password } = this.state
-    console.log(userName)
-    console.log(password)
+    // const { userName, password } = this.state
     
     // AuthApiService.postLogin({
     //   user_name: user_name.value,
@@ -82,9 +81,9 @@ export default class LoginForm extends Component {
       }
     ]
     return (
-      <form className='LoginForm' onSubmit={this.handleSubmitJwtAuth}>
-        <fieldset>
-          <legend>Sign In</legend>
+      <Form className='LoginForm' onSubmit={this.handleSubmitJwtAuth}>
+        <Fieldset>
+          <Legend>Sign In</Legend>
           <div role='alert'>
             {error && <p className='red'>{error}</p>}
           </div>
@@ -92,8 +91,8 @@ export default class LoginForm extends Component {
           {this.createInputs(inputs)}
           
           <Button type='submit'>Login</Button>
-        </fieldset>
-      </form>
+        </Fieldset>
+      </Form>
     )
   }
 }

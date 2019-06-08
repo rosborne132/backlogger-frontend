@@ -6,7 +6,7 @@ export const GameItem = styled.li`
 `
 
 export const GameBody = styled.div`
-  height: 400px;
+  height: 300px;
   width: 100%;
   background-color: #000;
 `

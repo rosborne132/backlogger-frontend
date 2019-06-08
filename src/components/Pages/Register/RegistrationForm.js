@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Button, InputGroup } from '../../Utils/Utils'
-// import AuthApiService from '../../services/auth-api-service'
 
-import './RegistrationForm.css'
+import { Button, InputGroup } from '../../Utils/Utils'
+import { Form, Fieldset, Legend } from "../../StyledComponents"
+// import AuthApiService from '../../services/auth-api-service'
 
 export default class RegistrationForm extends Component {
   static defaultProps = {
@@ -19,11 +19,7 @@ export default class RegistrationForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { fullName, userName, password, passwordMatch } = this.state
-    console.log(fullName)
-    console.log(userName)
-    console.log(password)
-    console.log(passwordMatch)
+    // const { fullName, userName, password, passwordMatch } = this.state
 
   //   this.setState({ error: null })
   //    AuthApiService.postUser({
@@ -104,9 +100,9 @@ export default class RegistrationForm extends Component {
       },
     ]
     return (
-      <form className="RegistrationForm" onSubmit={this.handleSubmit}>
-        <fieldset>
-          <legend>Sign up form</legend>
+      <Form className="RegistrationForm" onSubmit={this.handleSubmit}>
+        <Fieldset>
+          <Legend>Sign Up</Legend>
           <div role="alert">
             {error && <p className="red">{error}</p>}
           </div>
@@ -114,8 +110,8 @@ export default class RegistrationForm extends Component {
           {this.createInputs(inputs)}
 
           <Button className="signUp" type="submit">Sign Up</Button>
-        </fieldset>
-      </form>
+        </Fieldset>
+      </Form>
     )
   }
 }
