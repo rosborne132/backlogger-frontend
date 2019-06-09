@@ -1,11 +1,10 @@
 import React, { PureComponent, Suspense } from 'react'
-// import PropTypes from 'prop-types'
 
 import { GameError } from '../../Utils/Utils'
 import { List, GameItem, GameGrid } from '../../StyledComponents'
 
-
 import GamesContext from '../../../context/GamesContext'
+
 const Game = React.lazy(() => import('../../Game/Game'))
 
 class AllGamesPageMain extends PureComponent {
