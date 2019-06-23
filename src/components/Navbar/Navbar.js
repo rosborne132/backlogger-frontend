@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import TokenService from '../../services/token-service'
 
 const Nav = styled.nav`
     position: relative;
@@ -30,17 +31,45 @@ const NavLink = styled.li`
     }
 `
 
+const handleLogoutClick = () => {
+    TokenService.clearAuthToken()
+}
+
+const renderLogoutLink = () => {
+    return (
+      <NavLink>
+        <Link
+          onClick={handleLogoutClick}
+          to='/'>
+          Logout
+        </Link>
+      </NavLink>
+    )
+}
+
+const renderLoginLink = () => {
+    return (
+        <>
+            <NavLink><Link to='/login'>Login</Link></NavLink>
+            <NavLink><Link to='/register'>Signup</Link></NavLink>
+        </>
+    )
+}
+
+
+
 const Navbar = () => {
     return (
         <>
             <Nav role="navigation">
                 <ul>
-                    <NavLink><Link to ='/login'>Login</Link></NavLink>
-                    <NavLink><Link to ='/register'>Signup</Link></NavLink>
+                    {TokenService.hasAuthToken()
+                        ? renderLogoutLink()
+                        : renderLoginLink()}
                 </ul>
             </Nav>
         </>
     )
 }
 
-export default Navbar;
+export default Navbar

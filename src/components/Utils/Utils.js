@@ -1,11 +1,7 @@
 import React, { memo, PureComponent } from 'react'
-import { format as formatDate } from 'date-fns'
 import { Label, Input } from "../StyledComponents"
 import './Utils.css'
 
-export function NiceDate({ date, format='Do MMMM YYYY' }) {
-  return formatDate(date, format)
-}
 
 export function Button({ className, ...props }) {
   return <button className={['Button', className].join(' ')} {...props} />

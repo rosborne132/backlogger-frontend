@@ -29,7 +29,7 @@ class AllGamesPageMain extends PureComponent {
                             <Suspense fallback={<div>Loading...</div>}>
                                 <Game 
                                     id={currentGame[0].id}
-                                    name={currentGame[0].name}
+                                    title={currentGame[0].title}
                                 />
                             </Suspense>
                         </div>
@@ -44,7 +44,7 @@ class AllGamesPageMain extends PureComponent {
                                     <Suspense fallback={<div>Loading...</div>}>
                                         <Game 
                                             id={game.id}
-                                            name={game.name}
+                                            title={game.title}
                                         />
                                     </Suspense>
                                 </GameItem>

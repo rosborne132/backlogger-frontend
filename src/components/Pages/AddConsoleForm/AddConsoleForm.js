@@ -5,7 +5,8 @@ import { FormSubmitButton, Form, Fieldset, Legend, Select } from "../../StyledCo
 import { ValidationError } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
-// import config from "../config"
+
+import ConsoleApiService from '../../../services/console-api-service'
 
 class AddConsoleForm extends Component {
   constructor() {
@@ -15,73 +16,29 @@ class AddConsoleForm extends Component {
       consoleName: "",
       consoleValid: false,
       formValid: false,
-      consoleOptions: [
-        {
-          id: "29345-sdf234",
-          name: "Select your console"
-        },
-        {
-          "id": "b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1",
-          "name": "NES"
-        },
-        {
-          id: "sdfgkljhweriuysdf-fghrty",
-          name: "Dreamcast"
-        },
-        {
-          id: "sdfgkljhweriuysdf-werj",
-          name: "Xbox 360"
-        },
-        {
-          id: "sdfgkljhweriuysdf-wotkfjwb",
-          name: "PS2"
-        }
-      ]
+      consoleOptions: []
     }
   }
 
   componentDidMount() {
-    // fetch(`https://api-v3.igdb.com/games`, {
-    //   method: "get",
-    //     headers: {
-    //       "mode": "no-cors",
-    //       "content-type": "application/json",
-    //       "user-key": "76233ae8ea669f103a0110a8a2f2332d"
-    //     }
-    // })
-    // .then(res => {
-    //   if (!res.ok) return res.json().then(e => Promise.reject(e))
-    //   return res.json()
-    // })
-    // .then(resData => console.log(resData))
-    // .catch(error => {
-    //   console.error({ error })
-    // })
+    const consoleOptionTitle = {
+      id: "29345-sdf234",
+      title: "Select your console"
+    }
 
-    // axios({
-    //   url: "https://api-v3.igdb.com/games",
-    //   method: 'POST',
-    //   mode: 'no-cors',
-    //   headers: {
-    //       'Access-Control-Allow-Origin': '*',
-    //       'Accept': 'application/json',
-    //       'user-key': '76233ae8ea669f103a0110a8a2f2332d'
-    //   },
-    //   data: "fields age_ratings,aggregated_rating,aggregated_rating_count,alternative_names,artworks,bundles,category,collection,cover,created_at,dlcs,expansions,external_games,first_release_date,follows,franchise,franchises,game_engines,game_modes,genres,hypes,involved_companies,keywords,multiplayer_modes,name,parent_game,platforms,player_perspectives,popularity,pulse_count,rating,rating_count,release_dates,screenshots,similar_games,slug,standalone_expansions,status,storyline,summary,tags,themes,time_to_beat,total_rating,total_rating_count,updated_at,url,version_parent,version_title,videos,websites"
-    // })
-    //   .then(response => {
-    //       console.log(response.data)
-    //   })
-    //   .catch(err => {
-    //       console.error(err)
-    //   })
+    ConsoleApiService.getConsoles()
+      .then(consoles => {
+        this.setState({
+          consoleOptions: [consoleOptionTitle, ...consoles]
+        })
+      })
   }
 
   static contextType = GamesContext
 
   updateConsole = e => {
     let hasError = false
-    const console = this.state.consoleOptions.filter(cId => cId.name === e.target.value)
+    const console = this.state.consoleOptions.filter(cId => cId.title === e.target.value)
     const consoleIdStr = console[0].id
     if (consoleIdStr !== '29345-sdf234') {
       this.setState(
@@ -109,29 +66,18 @@ class AddConsoleForm extends Component {
     e.preventDefault()
     const { consoleId, consoleName } = this.state 
     const newConsole = {
-      id: consoleId,
-      name: consoleName,
+      user_id: 1,
+      console_id: consoleId,
+      title: consoleName
     }
-    this.context.addConsole(newConsole)
-    this.props.history.push(`/app`)
-    // fetch(`${config.FOLDER_API_ENDPOINT}`, {
-    //   method: "post",
-    //   headers: {
-    //     "content-type": "application/json"
-    //   },
-    //   body: JSON.stringify(folder)
-    // })
-    //   .then(res => {
-    //     if (!res.ok) return res.json().then(e => Promise.reject(e))
-    //     return res.json()
-    //   })
-    //   .then(folder => {
-    //     this.context.addFolder(folder)
-    //     this.props.history.push(`/folder/${folder.id}`)
-    //   })
-    //   .catch(error => {
-    //     console.error({ error })
-    //   })
+    ConsoleApiService.postUserConsole(consoleId, 1)
+      .then(console => {
+        this.context.addConsole(newConsole)
+        this.props.history.push(`/app`)
+      })
+      .catch(error => {
+        console.error({ error })
+      })
   }
 
   capitalize = (s) => {
@@ -142,7 +88,7 @@ class AddConsoleForm extends Component {
   render() {
     const { consoleOptions } = this.state
     const { consoles } = this.context
-    const consoleChoices = consoleOptions.filter(consoleOption => !consoles.some(console => console.id === consoleOption.id))
+    const consoleChoices = consoleOptions.filter(consoleOption => !consoles.some(console => console.console_id === consoleOption.id))
     return (
       <>
         <Form onSubmit={e => this.handleSubmit(e)}>
@@ -152,7 +98,7 @@ class AddConsoleForm extends Component {
           />
           <Fieldset>
             <Select onChange={this.updateConsole}>
-              {consoleChoices.map(consoleChoice => <option key={consoleChoice.id} value={consoleChoice.name}>{this.capitalize(consoleChoice.name)}</option>)}
+              {consoleChoices.map(consoleChoice => <option key={consoleChoice.id} value={consoleChoice.title}>{this.capitalize(consoleChoice.title)}</option>)}
             </Select>
           </Fieldset>
           <FormSubmitButton

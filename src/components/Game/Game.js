@@ -37,11 +37,11 @@ class Game extends PureComponent {
   }
 
   render() {
-    const { id, name } = this.props
+    const { id, title } = this.props
     return (
       <GameStyles>
         <GameHeader>
-          <Link to={`/app/game/${id}`}>{name}</Link>
+          <Link to={`/app/game/${id}`}>{title}</Link>
         </GameHeader>
 
         <GameBody></GameBody>
@@ -56,8 +56,8 @@ class Game extends PureComponent {
 }
 
 Game.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
 }
 
 export default Game

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-// import TokenService from '../../services/token-service'
-// import AuthApiService from '../../services/auth-api-service'
+import TokenService from '../../../services/token-service'
+import AuthApiService from '../../../services/auth-api-service'
 
 import { Form, Fieldset, Legend } from "../../StyledComponents"
 import { Button, InputGroup } from '../../Utils/Utils'
@@ -19,21 +19,22 @@ export default class LoginForm extends Component {
   handleSubmitJwtAuth = e => {
     e.preventDefault()
     this.setState({ error: null })
-    // const { userName, password } = this.state
+    const { userName, password } = this.state
+    console.log(userName, password)
     
-    // AuthApiService.postLogin({
-    //   user_name: user_name.value,
-    //   password: password.value,
-    // })
-    // .then(res => {
-    //   user_name.value = ''
-    //   password.value = ''
-    //   TokenService.saveAuthToken(res.authToken)
-    //   this.props.onLoginSuccess()
-    // })
-    // .catch(res => {
-    //   this.setState({ error: res.error })
-    // })
+    AuthApiService.postLogin({
+      user_name: userName,
+      password: password,
+    })
+    .then(res => {
+      userName.value = ''
+      password.value = ''
+      TokenService.saveAuthToken(res.authToken)
+      // this.props.onLoginSuccess()
+    })
+    .catch(res => {
+      this.setState({ error: res.error })
+    })
     this.props.history.push('/app')
   }
 
