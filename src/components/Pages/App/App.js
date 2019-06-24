@@ -100,14 +100,22 @@ class App extends Component {
     }
     
     handleUpdateGame = updatedGame => {
-        const updatedGames = this.state.games.map(game =>
-          (game.id === updatedGame.id)
-            ? updatedGame
-            : game
+        console.log("Trying to update game")
+        const { games } = this.state
+        games.map(game => console.log(game))
+        const updatedGames = games.map(game => {
+            // (game.id == updatedGame.id)
+            //   ? updatedGame
+            //   : game
+            console.log(game)
+            console.log(updatedGame)
+        }
         )
-        this.setState({
-          games: updatedGames
-        })
+
+        // console.log(updatedGames)
+        // this.setState({
+        //   games: updatedGames
+        // })
     }
     
     handleDeleteGame = gameId => {

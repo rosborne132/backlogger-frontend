@@ -23,7 +23,7 @@ class GameCompletedMain extends PureComponent {
                                     <Suspense fallback={<div>Loading...</div>}>
                                         <Game 
                                             id={game.id}
-                                            name={game.name}
+                                            title={game.title}
                                         />
                                     </Suspense>
                                 </GameItem>

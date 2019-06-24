@@ -2,6 +2,18 @@ import TokenService from './token-service'
 import config from '../config'
 
 const GameApiService = {
+  getUserGame(gameId){
+    return fetch(`${config.API_ENDPOINT}/game/${gameId}`, {
+      // headers: {
+      //   'authorization': `basic ${TokenService.getAuthToken()}`,
+      // },
+    })
+      .then(res =>
+        (!res.ok)
+          ? res.json().then(e => Promise.reject(e))
+          : res.json()
+      )
+  },
   getUserGames(userId) {
     return fetch(`${config.API_ENDPOINT}/game/${userId}`, {
       // headers: {
@@ -50,26 +62,15 @@ const GameApiService = {
           : res.json()
       )
   },
-  updateUserGame(    
-    title,
-    time_to_complete,
-    notes,
-    current_game,
-    console_id,
-    game_id) {
+  updateUserGame(game, game_id) {
     return fetch(`${config.API_ENDPOINT}/game/${game_id}`, {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-        'authorization': `bearer ${TokenService.getAuthToken()}`,
+        'accept': 'application/json'
+        // 'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
-      body: JSON.stringify({
-        title,
-        time_to_complete,
-        notes,
-        current_game,
-        console_id,
-      }),
+      body: JSON.stringify(game)
     })
       .then(res =>
         (!res.ok)

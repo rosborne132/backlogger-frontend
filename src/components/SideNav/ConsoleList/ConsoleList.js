@@ -29,9 +29,9 @@ class ConsoleList extends PureComponent{
                         </Console>
                     </NavLink>
                     {consoles.map(console => (
-                        <NavLink to={`/app/console/${console.id}`} key={console.id}>
+                        <NavLink to={`/app/console/${console.console_id}`} key={console.console_id}>
                             <Console>
-                                <span>{countGamesForConsole(games, console.id)}</span>
+                                <span>{countGamesForConsole(games, console.console_id)}</span>
                                 <span>{console.title}</span>
                             </Console>
                         </NavLink>

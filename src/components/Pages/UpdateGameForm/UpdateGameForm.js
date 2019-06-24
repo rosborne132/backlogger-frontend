@@ -4,22 +4,21 @@ import { Checkbox, FormSubmitButton, Form, Fieldset, Legend, Label, Input, Selec
 import { ValidationError } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
-// import config from "../config";
+import GameApiService from "../../../services/game-api-service";
 
 class UpdateGameForm extends Component {
   constructor() {
     super();
     this.state = {
-      name: "",
+      title: "",
       consoleId: "",
       currentGame: false,
       notes: "",
       updateGameTime: "",
-      nameValid: false,
-      consoleValid: false,
+      titleValid: false,
       formValid: false,
       validationMessages: {
-        name: ""
+        title: ""
       }
     };
   }
@@ -28,51 +27,37 @@ class UpdateGameForm extends Component {
 
   componentDidMount() {
     const gameId = this.props.match.params.gameId
-    console.log(gameId)
-    const gameToUpdate = this.context.games.filter(game => game.id === gameId)
-    console.log(gameToUpdate)
-    const { consoleId, currentGame, id, name, notes, timeToComplete } = gameToUpdate[0]
 
-    this.setState({consoleId, currentGame, id, name, notes, timeToComplete})
-    // fetch(`${config.NOTE_API_ENDPOINT}/${noteId}`, {
-    //   method: 'GET'
-    // })
-    // .then(res => {
-    //   if (!res.ok)
-    //     return res.json().then(error => Promise.reject(error))
-
-    //   return res.json()
-    // })
-    //   .then(resData => {
-    //     this.setState({
-    //       noteId,
-    //       name: resData.name,
-    //       folder_id: resData.folder_id,
-    //       content: resData.content,
-    //       value: resData.name
-    //     })
-    //   })
-    //   .catch(error => {
-    //     console.error(error)
-    //     this.setState({ error })
-    //   })
+    GameApiService.getUserGame(gameId)
+    .then(game => {
+      const { title, console_id, time_to_complete, notes, current_game } = game[0]
+      this.setState({
+        title,
+        consoleId: console_id,
+        notes,
+        currentGame: current_game,
+        updateGameTime: time_to_complete
+      })
+    })
   }
 
-  updateName = name =>
-    this.setState({ name }, () => {
-      this.validateName(name);
+  updateName = title =>
+    this.setState({ title }, () => {
+      this.validateTitle(title);
     });
 
   updateConsole = e => {
-    const console = this.context.consoles.filter(cId => cId.id === e.target.value);
-    const consoleIdStr = console[0].id;
+    const { consoles } = this.context
+    const selectedConsole = consoles.filter(cId => cId.console_id == e.target.value);
+    const newConsoleId = parseInt(selectedConsole[0].console_id)
+
     this.setState(
       {
-        consoleId: consoleIdStr,
+        consoleId: newConsoleId,
       },
       this.formValid
-    );
-  };
+    )
+  }
 
   updateContent = e => {
     this.setState({ notes: e.target.value });
@@ -86,7 +71,7 @@ class UpdateGameForm extends Component {
     this.setState({ updateGameTime: e.target.value });
   }
 
-  validateName(fieldValue) {
+  validateTitle(fieldValue) {
     const fieldErrors = { ...this.state.validationMessages };
     let hasError = false;
 
@@ -107,63 +92,50 @@ class UpdateGameForm extends Component {
     this.setState(
       {
         validationMessages: fieldErrors,
-        nameValid: !hasError
+        titleValid: !hasError
       },
       this.formValid
     );
   }
 
   formValid = () => {
-    const { nameValid } = this.state;
+    const { titleValid } = this.state;
     this.setState({
-      formValid: nameValid
+      formValid: titleValid
     });
   }
 
   handleSubmit = e => {
     e.preventDefault();
     const gameId = this.props.match.params.gameId
-    const { name, consoleId, currentGame, notes, updateGameTime } = this.state;
+    const { title, consoleId, currentGame, notes, updateGameTime } = this.state;
     const game = {
       id: gameId,
-      name,
-      consoleId,
-      currentGame,
+      title,
+      console_id: consoleId,
+      current_game: currentGame,
       notes,
-      timeToComplete: updateGameTime
-    };
-    this.context.updateGame(game)
+      time_to_complete: updateGameTime
+    }
+    GameApiService.updateUserGame(game, gameId)
+    .then(updatedGame => {
+      console.log("Game Updated")
+    })
+    .catch(error => console.error({ error }))
+    this.context.updateGame()
     this.props.history.push(`/app/console/${game.consoleId}`);
-    // fetch(`${config.NOTE_API_ENDPOINT}/${this.state.gameId}`, {
-    //     method: "PATCH",
-    //     headers: {
-    //       "content-type": "application/json",
-    //     },
-    //     body: JSON.stringify(game),
-    //   })
-    //     .then(res => {
-    //       if (!res.ok) return res.json().then(e => Promise.reject(e));
-    //       return res.json();
-    //     })
-    //     .then(folder => {
-    //       this.context.updateNote(game);
-    //       this.props.history.push(`/`);
-    //     })
-    //     .catch(error => {
-    //       console.error({ error });
-    //     });
   };
 
   render() {
-    const { consoles } = this.context;
-    const { name, consoleId, currentGame, notes, updateGameTime } = this.state;
+    const { consoles } = this.context
+    const { title, consoleId, currentGame, notes, updateGameTime } = this.state
 
     return (
       <>
         <Form onSubmit={this.handleSubmit}>
           <Legend style={{display: "flex", justifyContent: "center"}}>Update game!</Legend>
           <ValidationError
-            hasError={!this.state.nameValid}
+            hasError={!this.state.titleValid}
             message={this.state.validationMessages.name}
           />
           <Fieldset>
@@ -173,7 +145,7 @@ class UpdateGameForm extends Component {
                 type="text"
                 placeholder="Enter Note Name"
                 id="name"
-                value={name}
+                value={title}
                 onChange={e => this.updateName(e.target.value)}
               />
             </p>
@@ -182,7 +154,7 @@ class UpdateGameForm extends Component {
               <Label htmlFor="console">Console: </Label>
               <Select name="console" value={consoleId} onChange={this.updateConsole}>
                 {consoles.map(console => (
-                  <option key={console.id} value={console.id}>{console.name}</option>
+                  <option key={console.console_id} value={console.console_id}>{console.title}</option>
                 ))}
               </Select>
             </p>
