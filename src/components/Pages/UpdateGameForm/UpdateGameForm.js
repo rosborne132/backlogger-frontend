@@ -26,7 +26,7 @@ class UpdateGameForm extends Component {
   static contextType = GamesContext;
 
   componentDidMount() {
-    const gameId = this.props.match.params.gameId
+    const gameId = parseInt(this.props.match.params.gameId)
 
     GameApiService.getUserGame(gameId)
     .then(game => {
@@ -51,12 +51,7 @@ class UpdateGameForm extends Component {
     const selectedConsole = consoles.filter(cId => cId.console_id == e.target.value);
     const newConsoleId = parseInt(selectedConsole[0].console_id)
 
-    this.setState(
-      {
-        consoleId: newConsoleId,
-      },
-      this.formValid
-    )
+    this.setState({ consoleId: newConsoleId }, this.formValid)
   }
 
   updateContent = e => {
@@ -110,7 +105,7 @@ class UpdateGameForm extends Component {
     const gameId = this.props.match.params.gameId
     const { title, consoleId, currentGame, notes, updateGameTime } = this.state;
     const game = {
-      id: gameId,
+      id: parseInt(gameId),
       title,
       console_id: consoleId,
       current_game: currentGame,
@@ -122,8 +117,8 @@ class UpdateGameForm extends Component {
       console.log("Game Updated")
     })
     .catch(error => console.error({ error }))
-    this.context.updateGame()
-    this.props.history.push(`/app/console/${game.consoleId}`);
+    this.context.updateGame(game)
+    this.props.history.push(`/app/console/${game.console_id}`);
   };
 
   render() {

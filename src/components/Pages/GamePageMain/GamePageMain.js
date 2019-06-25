@@ -11,12 +11,12 @@ const Game = React.lazy(() => import('../../Game/Game'))
 class GamePageMain extends PureComponent {
     static contextType = GamesContext
     render() {
-        const getGamesForConsole = (games = [], consoleId) => !consoleId ? games : games.filter(game => game.consoleId === consoleId && game.isCompleted !== true)  
+        const getGamesForConsole = (games = [], consoleId) => !consoleId ? games : games.filter(game => game.console_id === consoleId && game.isCompleted !== true)  
         
         const { consoleId } = this.props.match.params
         const { games } = this.context
         
-        const gamesFromConsole = getGamesForConsole(games, consoleId)
+        const gamesFromConsole = getGamesForConsole(games, parseInt(consoleId))
         return (
             <>
                 <GameError>
@@ -27,7 +27,7 @@ class GamePageMain extends PureComponent {
                                     <Suspense fallback={<div>Loading...</div>}>
                                         <Game 
                                             id={game.id}
-                                            name={game.name}
+                                            title={game.title}
                                         />
                                     </Suspense>
                                 </GameItem>

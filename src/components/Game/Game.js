@@ -8,6 +8,7 @@ import { GameIcons, GameStyles, GameHeader, GameBody } from '../StyledComponents
 // import config from "../config"
 
 import GamesContext from '../../context/GamesContext'
+import GameApiService from "../../services/game-api-service";
 
 class Game extends PureComponent {
 
@@ -16,24 +17,12 @@ class Game extends PureComponent {
   handleDeleteGame = e => {
     e.preventDefault()
     const { id } = this.props
-    // console.log(`${name}: ${id}`)
-    this.context.deleteGame(id)
-    // fetch(`${config.NOTE_API_ENDPOINT}/${noteId}`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     "content-type": "application/json"
-    //   }
-    // })
-    //   .then(res => {
-    //     if (!res.ok) return res.json().then(e => Promise.reject(e))
-    //     return res.json()
-    //   })
-    //   .then(() => {
-    //     this.context.deleteNote(noteId)
-    //   })
-    //   .catch(error => {
-    //     console.error({ error })
-    //   })
+    GameApiService.deleteUserGame(parseInt(id))
+    .then(message => {
+      console.log('Game deleted!')
+      console.log(message)
+      this.context.deleteGame(id)
+    })
   }
 
   render() {

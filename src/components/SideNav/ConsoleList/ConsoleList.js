@@ -11,7 +11,7 @@ class ConsoleList extends PureComponent{
         const { consoles, games } = this.context
 
         const getAllUncompletedGames= (games = []) => games.filter(game => game.isCompleted !== true).length
-        const countGamesForConsole = (games = [], consoleId) => games.filter(game => game.consoleId === consoleId && game.isCompleted !== true).length
+        const countGamesForConsole = (games = [], consoleId) => games.filter(game => game.console_id === consoleId && game.isCompleted !== true).length
         const countCompletedGames = (games = []) => games.filter(game => game.isCompleted === true).length
         return (
             <>

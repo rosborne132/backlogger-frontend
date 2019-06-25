@@ -15,7 +15,7 @@ const GameApiService = {
       )
   },
   getUserGames(userId) {
-    return fetch(`${config.API_ENDPOINT}/game/${userId}`, {
+    return fetch(`${config.API_ENDPOINT}/games/${userId}`, {
       // headers: {
       //   'authorization': `basic ${TokenService.getAuthToken()}`,
       // },
@@ -26,35 +26,14 @@ const GameApiService = {
           : res.json()
       )
   },
-  postUserGame(    
-      title,
-      time_to_complete,
-      notes,
-      current_game,
-      summary,
-      storyline,
-      game_rating,
-      game_cover,
-      console_id,
-      user_id) {
+  postUserGame(game) {
     return fetch(`${config.API_ENDPOINT}/game`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'authorization': `bearer ${TokenService.getAuthToken()}`,
+        // 'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
-      body: JSON.stringify({
-        title,
-        time_to_complete,
-        notes,
-        current_game,
-        summary,
-        storyline,
-        game_rating,
-        game_cover,
-        console_id,
-        user_id,
-      }),
+      body: JSON.stringify(game),
     })
       .then(res =>
         (!res.ok)
@@ -83,7 +62,7 @@ const GameApiService = {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
-        'authorization': `bearer ${TokenService.getAuthToken()}`,
+        // 'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
     })
       .then(res =>

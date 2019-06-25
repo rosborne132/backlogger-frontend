@@ -5,22 +5,23 @@ import { Checkbox, FormSubmitButton, Form, Fieldset, Legend, Label, Input, Selec
 import { ValidationError } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
+import GameApiService from "../../../services/game-api-service";
 // import config from "../config"
 
 class AddGameForm extends Component {
   constructor() {
     super()
     this.state = {
-      name: "",
+      title: "",
       consoleId: "",
       currentGame: false,
       notes: "",
       updateGameTime: "",
-      nameValid: false,
+      titleValid: false,
       consoleValid: false,
       formValid: false,
       validationMessages: {
-        name: ""
+        title: ""
       }
     }
   }
@@ -28,19 +29,20 @@ class AddGameForm extends Component {
   static contextType = GamesContext
 
   updateName = e => {
-    const name = e.target.value
-    this.setState({ name }, () => {
-      this.validateName(name) 
+    const title = e.target.value
+    this.setState({ title }, () => {
+      this.validateTitle(title) 
     })
   }
 
   updateConsole = e => {
     let hasError = false
-    const console = this.context.consoles.filter(cId => cId.name === e.target.value)
-    const consoleIdStr = console[0].id
+    const { consoles } = this.context
+    const selectedConsole = consoles.filter(cId => cId.console_id == e.target.value);
+    const newConsoleId = parseInt(selectedConsole[0].console_id)
     this.setState(
       {
-        consoleId: consoleIdStr,
+        consoleId: newConsoleId,
         consoleValid: !hasError
       },
       this.formValid
@@ -59,20 +61,20 @@ class AddGameForm extends Component {
     this.setState({ updateGameTime: e.target.value })
   }
 
-  validateName(fieldValue) {
+  validateTitle(fieldValue) {
     const fieldErrors = { ...this.state.validationMessages }
     let hasError = false
 
     fieldValue = fieldValue.trim()
     if (fieldValue.length === 0) {
-      fieldErrors.name = "Name is required"
+      fieldErrors.title = "Title is required"
       hasError = true
     } else {
       if (fieldValue.length < 2) {
-        fieldErrors.name = "Name must be at least 2 characters long"
+        fieldErrors.title = "Title must be at least 2 characters long"
         hasError = true
       } else {
-        fieldErrors.name = ""
+        fieldErrors.title = ""
         hasError = false
       }
     }
@@ -80,51 +82,43 @@ class AddGameForm extends Component {
     this.setState(
       {
         validationMessages: fieldErrors,
-        nameValid: !hasError
+        titleValid: !hasError
       },
       this.formValid
     )
   }
 
   formValid = () => {
-    const { nameValid, consoleValid } = this.state
+    const { titleValid, consoleValid } = this.state
     this.setState({
-      formValid: nameValid && consoleValid
+      formValid: titleValid && consoleValid
     })
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    const { name, consoleId, currentGame, notes, updateGameTime } = this.state
+    const { title, consoleId, currentGame, notes, updateGameTime } = this.state
     const game = {
-      id: uuid(),
-      name,
-      consoleId,
-      timeToComplete: updateGameTime,
+      // id: uuid(),
+      title,
+      console_id: consoleId,
+      current_game: currentGame,
       notes,
-      currentGame,
-      isCompleted: false
+      time_to_complete: updateGameTime,
+      user_id: 1
     }
-    this.context.addGame(game)
-    this.props.history.push(`/app/console/${game.consoleId}`)
-    // fetch(`${config.NOTE_API_ENDPOINT}`, {
-    //   method: "post",
-    //   headers: {
-    //     "content-type": "application/json"
-    //   },
-    //   body: JSON.stringify(note)
-    // })
-    //   .then(res => {
-    //     if (!res.ok) return res.json().then(e => Promise.reject(e))
-    //     return res.json()
-    //   })
-    //   .then(folder => {
-    //     this.context.addNote(note)
-    //     this.props.history.push(`/folder/${folder.id}`)
-    //   })
-    //   .catch(error => {
-    //     console.error({ error })
-    //   })
+    // console.log(game)
+
+    // FETCH GAME DATA FROM IGDB
+
+    // POST NEW GAME
+    GameApiService.postUserGame(game)
+    .then(newGame => {
+      console.log("new game posted")
+      console.log(newGame)
+      this.context.addGame(game)
+      this.props.history.push(`/app/console/${game.console_id}`)
+    })
   }
 
   render() {
@@ -135,7 +129,7 @@ class AddGameForm extends Component {
         <Form onSubmit={this.handleSubmit}>
           <Legend style={{display: "flex", justifyContent: "center"}}>Add a new game to play!</Legend>
           <ValidationError
-            hasError={!this.state.nameValid}
+            hasError={!this.state.titleValid}
             message={this.state.validationMessages.name}
           />
           <Fieldset>
@@ -154,7 +148,7 @@ class AddGameForm extends Component {
               <Select name="console" onChange={this.updateConsole}>
                 <option >Select your console</option>
                 {consoles.map(console => (
-                  <option key={console.id} value={console.name}>{console.name}</option>
+                  <option key={console.id} value={console.console_id}>{console.title}</option>
                 ))}
               </Select>
             </p>
