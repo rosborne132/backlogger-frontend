@@ -10,16 +10,16 @@ class ConsoleList extends PureComponent{
     render() {
         const { consoles, games } = this.context
 
-        const getAllUncompletedGames= (games = []) => games.filter(game => game.isCompleted !== true).length
-        const countGamesForConsole = (games = [], consoleId) => games.filter(game => game.console_id === consoleId && game.isCompleted !== true).length
-        const countCompletedGames = (games = []) => games.filter(game => game.isCompleted === true).length
+        const getAllUncompletedGames= (games = []) => games.filter(game => game.is_complete !== true).length
+        const countGamesForConsole = (games = [], consoleId) => games.filter(game => game.console_id === consoleId && game.is_complete !== true).length
+        const countCompletedGames = (games = []) => games.filter(game => game.is_complete === true).length
         return (
             <>
                 <List>
                     <NavLink to={`/app`}>
                         <Console>
                             <span>{getAllUncompletedGames(games)}</span>
-                            <span>All Games</span>
+                            <span>In The Backlog</span>
                         </Console>
                     </NavLink>
                     <NavLink to={`/app/console`}>

@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import Navbar from './components/Navbar/Navbar'
 import { App, Landing, LoginForm, RegistrationForm } from './components/Pages'
-import PrivateRoute from './components/Utils/PrivateRoute'
+// import PrivateRoute from './components/Utils/PrivateRoute'
 import PublicOnlyRoute from './components/Utils/PublicOnlyRoute'
 import './Home.css';
 

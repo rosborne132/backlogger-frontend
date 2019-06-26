@@ -2,6 +2,18 @@ import TokenService from './token-service'
 import config from '../config'
 
 const GameApiService = {
+  getMaxGameId() {
+    return fetch(`${config.API_ENDPOINT}/gameId`, {
+      // headers: {
+      //   'authorization': `basic ${TokenService.getAuthToken()}`,
+      // },
+    })
+      .then(res =>
+        (!res.ok)
+          ? res.json().then(e => Promise.reject(e))
+          : res.json()
+      )
+  },
   getUserGame(gameId){
     return fetch(`${config.API_ENDPOINT}/game/${gameId}`, {
       // headers: {
@@ -61,7 +73,6 @@ const GameApiService = {
     return fetch(`${config.API_ENDPOINT}/game/${game_id}`, {
       method: 'DELETE',
       headers: {
-        'content-type': 'application/json',
         // 'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
     })

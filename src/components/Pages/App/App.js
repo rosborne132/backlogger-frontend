@@ -52,7 +52,7 @@ class App extends Component {
     handleUpdateGame = updatedGame => {
         const { games } = this.state
         const updatedGames = games.map(game => 
-            (game.id == updatedGame.id)
+            (parseInt(game.id) === parseInt(updatedGame.id))
               ? updatedGame
               : game
         )
@@ -63,6 +63,7 @@ class App extends Component {
     
     handleDeleteGame = gameId => {
         const { games } = this.state
+        console.log(gameId)
         const newGames = games.filter(game => game.id !== gameId)
         this.setState({
             games: newGames

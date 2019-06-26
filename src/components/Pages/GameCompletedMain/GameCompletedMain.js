@@ -9,7 +9,7 @@ const Game = React.lazy(() => import('../../Game/Game'))
 class GameCompletedMain extends PureComponent {
     static contextType = GamesContext;
     render() {
-        const getCompletedGames = (games = []) => games.filter(game => game.isCompleted === true);   
+        const getCompletedGames = (games = []) => games.filter(game => game.is_complete === true);   
 
         const { games } = this.context
         const gamesCompleted = getCompletedGames(games);

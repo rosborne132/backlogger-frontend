@@ -10,11 +10,13 @@ class UpdateGameForm extends Component {
   constructor() {
     super();
     this.state = {
+      id: null,
       title: "",
       consoleId: "",
       currentGame: false,
       notes: "",
       updateGameTime: "",
+      updateComplete: null,
       titleValid: false,
       formValid: false,
       validationMessages: {
@@ -30,13 +32,15 @@ class UpdateGameForm extends Component {
 
     GameApiService.getUserGame(gameId)
     .then(game => {
-      const { title, console_id, time_to_complete, notes, current_game } = game[0]
+      const { title, console_id, time_to_complete, notes, current_game, is_complete } = game[0]
       this.setState({
+        id: gameId,
         title,
         consoleId: console_id,
         notes,
         currentGame: current_game,
-        updateGameTime: time_to_complete
+        updateGameTime: time_to_complete,
+        updateComplete: is_complete
       })
     })
   }
@@ -48,7 +52,7 @@ class UpdateGameForm extends Component {
 
   updateConsole = e => {
     const { consoles } = this.context
-    const selectedConsole = consoles.filter(cId => cId.console_id == e.target.value);
+    const selectedConsole = consoles.filter(cId => parseInt(cId.console_id) === parseInt(e.target.value));
     const newConsoleId = parseInt(selectedConsole[0].console_id)
 
     this.setState({ consoleId: newConsoleId }, this.formValid)
@@ -60,6 +64,10 @@ class UpdateGameForm extends Component {
 
   updateCurrentGame = () => {
     this.setState({ currentGame: !this.state.currentGame });
+  }
+
+  updateGameComplete = () => {
+    this.setState({ updateComplete: !this.state.updateComplete });
   }
 
   updateGameTime = e => {
@@ -102,17 +110,18 @@ class UpdateGameForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const gameId = this.props.match.params.gameId
-    const { title, consoleId, currentGame, notes, updateGameTime } = this.state;
+    const { id, title, consoleId, currentGame, notes, updateGameTime, updateComplete } = this.state;
     const game = {
-      id: parseInt(gameId),
+      id,
       title,
       console_id: consoleId,
       current_game: currentGame,
       notes,
-      time_to_complete: updateGameTime
+      time_to_complete: updateGameTime,
+      is_complete: updateComplete
     }
-    GameApiService.updateUserGame(game, gameId)
+    console.log(game)
+    GameApiService.updateUserGame(game, id)
     .then(updatedGame => {
       console.log("Game Updated")
     })
@@ -123,7 +132,7 @@ class UpdateGameForm extends Component {
 
   render() {
     const { consoles } = this.context
-    const { title, consoleId, currentGame, notes, updateGameTime } = this.state
+    const { title, consoleId, currentGame, notes, updateGameTime, updateComplete } = this.state
 
     return (
       <>
@@ -177,6 +186,16 @@ class UpdateGameForm extends Component {
                 name="currentGame"
                 checked={currentGame}
                 onChange={this.updateCurrentGame}
+                />
+            </p>
+
+            <p style={{display: "flex", justifyContent: "space-between"}}>
+              <Label htmlFor="updateComplete">Game Complete:</Label>
+              <Checkbox 
+                type="checkbox"
+                name="updateComplete"
+                checked={updateComplete}
+                onChange={this.updateGameComplete}
                 />
             </p>
           </Fieldset>

@@ -18,11 +18,7 @@ class Game extends PureComponent {
     e.preventDefault()
     const { id } = this.props
     GameApiService.deleteUserGame(parseInt(id))
-    .then(message => {
-      console.log('Game deleted!')
-      console.log(message)
-      this.context.deleteGame(id)
-    })
+    .then(message => this.context.deleteGame(id))
   }
 
   render() {

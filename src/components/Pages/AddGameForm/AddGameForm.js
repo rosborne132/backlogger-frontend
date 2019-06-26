@@ -1,17 +1,16 @@
 import React, { Component } from "react"
-import uuid from 'uuid'
 
 import { Checkbox, FormSubmitButton, Form, Fieldset, Legend, Label, Input, Select, Textarea } from "../../StyledComponents"
 import { ValidationError } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
 import GameApiService from "../../../services/game-api-service";
-// import config from "../config"
 
 class AddGameForm extends Component {
   constructor() {
     super()
     this.state = {
+      id: null,
       title: "",
       consoleId: "",
       currentGame: false,
@@ -28,6 +27,15 @@ class AddGameForm extends Component {
 
   static contextType = GamesContext
 
+  componentDidMount() {
+    GameApiService.getMaxGameId()
+    .then(gameId => {
+      const currentId = gameId.id + 1
+      this.setState({ id: currentId })
+    })
+    // .then(gameId => console.log(gameId))
+  }
+
   updateName = e => {
     const title = e.target.value
     this.setState({ title }, () => {
@@ -38,7 +46,7 @@ class AddGameForm extends Component {
   updateConsole = e => {
     let hasError = false
     const { consoles } = this.context
-    const selectedConsole = consoles.filter(cId => cId.console_id == e.target.value);
+    const selectedConsole = consoles.filter(cId => parseInt(cId.console_id) === parseInt(e.target.value));
     const newConsoleId = parseInt(selectedConsole[0].console_id)
     this.setState(
       {
@@ -97,9 +105,10 @@ class AddGameForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { title, consoleId, currentGame, notes, updateGameTime } = this.state
+    const { id, title, consoleId, currentGame, notes, updateGameTime } = this.state
+    
     const game = {
-      // id: uuid(),
+      id,
       title,
       console_id: consoleId,
       current_game: currentGame,
@@ -107,15 +116,12 @@ class AddGameForm extends Component {
       time_to_complete: updateGameTime,
       user_id: 1
     }
-    // console.log(game)
 
     // FETCH GAME DATA FROM IGDB
 
     // POST NEW GAME
     GameApiService.postUserGame(game)
     .then(newGame => {
-      console.log("new game posted")
-      console.log(newGame)
       this.context.addGame(game)
       this.props.history.push(`/app/console/${game.console_id}`)
     })
