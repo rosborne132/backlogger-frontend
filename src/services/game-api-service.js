@@ -4,9 +4,9 @@ import config from '../config'
 const GameApiService = {
   getMaxGameId() {
     return fetch(`${config.API_ENDPOINT}/gameId`, {
-      // headers: {
-      //   'authorization': `basic ${TokenService.getAuthToken()}`,
-      // },
+      headers: {
+        'authorization': `basic ${TokenService.getAuthToken()}`,
+      },
     })
       .then(res =>
         (!res.ok)
@@ -16,9 +16,9 @@ const GameApiService = {
   },
   getUserGame(gameId){
     return fetch(`${config.API_ENDPOINT}/game/${gameId}`, {
-      // headers: {
-      //   'authorization': `basic ${TokenService.getAuthToken()}`,
-      // },
+      headers: {
+        'authorization': `basic ${TokenService.getAuthToken()}`,
+      },
     })
       .then(res =>
         (!res.ok)
@@ -26,11 +26,11 @@ const GameApiService = {
           : res.json()
       )
   },
-  getUserGames(userId) {
-    return fetch(`${config.API_ENDPOINT}/games/${userId}`, {
-      // headers: {
-      //   'authorization': `basic ${TokenService.getAuthToken()}`,
-      // },
+  getUserGames() {
+    return fetch(`${config.API_ENDPOINT}/games`, {
+      headers: {
+        'authorization': `basic ${TokenService.getAuthToken()}`,
+      },
     })
       .then(res =>
         (!res.ok)
@@ -43,7 +43,7 @@ const GameApiService = {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        // 'authorization': `bearer ${TokenService.getAuthToken()}`,
+        'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
       body: JSON.stringify(game),
     })
@@ -58,8 +58,8 @@ const GameApiService = {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-        'accept': 'application/json'
-        // 'authorization': `bearer ${TokenService.getAuthToken()}`,
+        'accept': 'application/json',
+        'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
       body: JSON.stringify(game)
     })
@@ -73,7 +73,7 @@ const GameApiService = {
     return fetch(`${config.API_ENDPOINT}/game/${game_id}`, {
       method: 'DELETE',
       headers: {
-        // 'authorization': `bearer ${TokenService.getAuthToken()}`,
+        'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
     })
       .then(res =>

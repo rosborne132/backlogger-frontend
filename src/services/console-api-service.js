@@ -4,9 +4,9 @@ import config from '../config'
 const ConsoleApiService = {
   getConsoles() {
     return fetch(`${config.API_ENDPOINT}/console`, {
-      // headers: {
-      //   'authorization': `basic ${TokenService.getAuthToken()}`,
-      // },
+      headers: {
+        'authorization': `basic ${TokenService.getAuthToken()}`,
+      },
     })
       .then(res =>
         (!res.ok)
@@ -14,11 +14,11 @@ const ConsoleApiService = {
           : res.json()
       )
   },
-  getUserConsoles(userId) {
-    return fetch(`${config.API_ENDPOINT}/console/${userId}`, {
-      // headers: {
-      //   'authorization': `basic ${TokenService.getAuthToken()}`,
-      // },
+  getUserConsoles() {
+    return fetch(`${config.API_ENDPOINT}/consoles`, {
+      headers: {
+        'authorization': `basic ${TokenService.getAuthToken()}`,
+      },
     })
       .then(res =>
         (!res.ok)
@@ -26,16 +26,15 @@ const ConsoleApiService = {
           : res.json()
       )
   },
-  postUserConsole(consoleId, userId) {
+  postUserConsole(consoleId) {
     return fetch(`${config.API_ENDPOINT}/console`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        // 'authorization': `bearer ${TokenService.getAuthToken()}`,
+        'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
       body: JSON.stringify({
         console_id: consoleId,
-        user_id: userId,
       }),
     })
       .then(res =>

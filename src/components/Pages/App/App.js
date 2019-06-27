@@ -30,9 +30,9 @@ class App extends Component {
     }
 
     componentDidMount() {
-        ConsoleApiService.getUserConsoles(1)
+        ConsoleApiService.getUserConsoles()
         .then(consoles => this.setState({ consoles }))
-        GameApiService.getUserGames(1)
+        GameApiService.getUserGames()
         .then(games => this.setState({ games }))
     }
 

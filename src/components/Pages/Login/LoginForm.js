@@ -21,20 +21,27 @@ export default class LoginForm extends Component {
     this.setState({ error: null })
     const { userName, password } = this.state
     console.log(userName, password)
+
+    TokenService.saveAuthToken(
+      TokenService.makeBasicAuthToken(userName, password)
+    )
+
+    // userName.value = ''
+    // password.value = ''
     
-    AuthApiService.postLogin({
-      user_name: userName,
-      password: password,
-    })
-    .then(res => {
-      userName.value = ''
-      password.value = ''
-      TokenService.saveAuthToken(res.authToken)
-      // this.props.onLoginSuccess()
-    })
-    .catch(res => {
-      this.setState({ error: res.error })
-    })
+    // AuthApiService.postLogin({
+    //   user_name: userName,
+    //   password: password,
+    // })
+    // .then(res => {
+    //   userName.value = ''
+    //   password.value = ''
+    //   TokenService.saveAuthToken(res.authToken)
+    //   // this.props.onLoginSuccess()
+    // })
+    // .catch(res => {
+    //   this.setState({ error: res.error })
+    // })
     this.props.history.push('/app')
   }
 
