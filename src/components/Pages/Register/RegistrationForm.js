@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { Button, InputGroup } from '../../Utils/Utils'
 import { Form, Fieldset, Legend } from "../../StyledComponents"
-// import AuthApiService from '../../services/auth-api-service'
+import AuthApiService from '../../../services/auth-api-service'
 
 export default class RegistrationForm extends Component {
   static defaultProps = {
@@ -19,25 +19,29 @@ export default class RegistrationForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    // const { fullName, userName, password, passwordMatch } = this.state
+    const { fullName, userName, password, passwordMatch } = this.state
 
-  //   this.setState({ error: null })
-  //    AuthApiService.postUser({
-  //      user_name: user_name.value,
-  //      password: password.value,
-  //      full_name: full_name.value,
-  //      nickname: nick_name.value,
-  //    }).then(user => {
-  //     full_name.value = ''
-  //     nick_name.value = ''
-  //     user_name.value = ''
-  //     password.value = ''
-  //     this.props.onRegistrationSuccess()
-  //   })
-  //  .catch(res => {
-  //    this.setState({ error: res.error })
-  //  })
-    this.props.history.push('/app')
+    if(password === passwordMatch) {
+      this.setState({ error: null })
+       AuthApiService.postUser({
+         user_name: userName,
+         password: password,
+         full_name: fullName,
+       }).then(user => {
+        this.setState({
+          fullName: '',
+          userName: '',
+          password: '',
+          passwordMatch: ''
+        })
+        this.props.onRegistrationSuccess()
+      })
+     .catch(res => {
+       this.setState({ error: res.error })
+     })
+      this.props.history.push('/app')
+    }
+
   }
 
   onChange = e => {

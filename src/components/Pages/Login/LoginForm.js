@@ -11,8 +11,8 @@ export default class LoginForm extends Component {
   }
 
   state = { 
-    userName: '',
-    password: '',
+    userName: "",
+    password: "",
     error: null 
   }
 
@@ -25,31 +25,23 @@ export default class LoginForm extends Component {
     TokenService.saveAuthToken(
       TokenService.makeBasicAuthToken(userName, password)
     )
-
-    // userName.value = ''
-    // password.value = ''
     
-    // AuthApiService.postLogin({
-    //   user_name: userName,
-    //   password: password,
-    // })
-    // .then(res => {
-    //   userName.value = ''
-    //   password.value = ''
-    //   TokenService.saveAuthToken(res.authToken)
-    //   // this.props.onLoginSuccess()
-    // })
-    // .catch(res => {
-    //   this.setState({ error: res.error })
-    // })
+    AuthApiService.postLogin({
+      user_name: userName,
+      password: password,
+    })
+    .then(res => {
+      TokenService.saveAuthToken(res.authToken)
+      this.setState({ userName: "", password: "" })
+      this.props.onLoginSuccess()
+    })
+    .catch(res => {
+      this.setState({ error: res.error })
+    })
     this.props.history.push('/app')
   }
 
-  onChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
+  onChange = e => this.setState({ [e.target.name]: e.target.value })
   
   createInputs = inputs => {
     return inputs.map(input => {

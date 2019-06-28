@@ -5,7 +5,7 @@ const GameApiService = {
   getMaxGameId() {
     return fetch(`${config.API_ENDPOINT}/gameId`, {
       headers: {
-        'authorization': `basic ${TokenService.getAuthToken()}`,
+        'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
     })
       .then(res =>
@@ -17,7 +17,7 @@ const GameApiService = {
   getUserGame(gameId){
     return fetch(`${config.API_ENDPOINT}/game/${gameId}`, {
       headers: {
-        'authorization': `basic ${TokenService.getAuthToken()}`,
+        'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
     })
       .then(res =>
@@ -29,7 +29,7 @@ const GameApiService = {
   getUserGames() {
     return fetch(`${config.API_ENDPOINT}/games`, {
       headers: {
-        'authorization': `basic ${TokenService.getAuthToken()}`,
+        'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
     })
       .then(res =>

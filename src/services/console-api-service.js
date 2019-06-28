@@ -5,7 +5,7 @@ const ConsoleApiService = {
   getConsoles() {
     return fetch(`${config.API_ENDPOINT}/console`, {
       headers: {
-        'authorization': `basic ${TokenService.getAuthToken()}`,
+        'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
     })
       .then(res =>
@@ -17,7 +17,7 @@ const ConsoleApiService = {
   getUserConsoles() {
     return fetch(`${config.API_ENDPOINT}/consoles`, {
       headers: {
-        'authorization': `basic ${TokenService.getAuthToken()}`,
+        'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
     })
       .then(res =>
