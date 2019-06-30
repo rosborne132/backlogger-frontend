@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 import TokenService from '../../../services/token-service'
 import AuthApiService from '../../../services/auth-api-service'
 
@@ -13,14 +14,14 @@ export default class LoginForm extends Component {
   state = { 
     userName: "",
     password: "",
-    error: null 
+    error: null ,
+    redirect: false 
   }
 
   handleSubmitJwtAuth = e => {
     e.preventDefault()
     this.setState({ error: null })
     const { userName, password } = this.state
-    console.log(userName, password)
 
     TokenService.saveAuthToken(
       TokenService.makeBasicAuthToken(userName, password)
@@ -32,13 +33,12 @@ export default class LoginForm extends Component {
     })
     .then(res => {
       TokenService.saveAuthToken(res.authToken)
-      this.setState({ userName: "", password: "" })
+      this.setState({ userName: "", password: "", redirect: true })
       this.props.onLoginSuccess()
     })
     .catch(res => {
       this.setState({ error: res.error })
     })
-    this.props.history.push('/app')
   }
 
   onChange = e => this.setState({ [e.target.name]: e.target.value })
@@ -61,7 +61,7 @@ export default class LoginForm extends Component {
   }
 
   render() {
-    const { error, userName, password } = this.state
+    const { error, userName, password, redirect } = this.state
     const inputs = [
       {
         labelFor: 'RegistrationForm__user_name',
@@ -80,6 +80,11 @@ export default class LoginForm extends Component {
         inputValue: password
       }
     ]
+
+    if (redirect) {
+      return <Redirect to='/app'/>;
+    }
+
     return (
       <Form className='LoginForm' onSubmit={this.handleSubmitJwtAuth}>
         <Fieldset>

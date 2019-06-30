@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 
 import { Button, InputGroup } from '../../Utils/Utils'
 import { Form, Fieldset, Legend } from "../../StyledComponents"
@@ -14,7 +15,8 @@ export default class RegistrationForm extends Component {
     userName: '',
     password: '',
     passwordMatch: '',
-    error: null 
+    error: null,
+    redirect: false 
   }
 
   handleSubmit = e => {
@@ -32,16 +34,15 @@ export default class RegistrationForm extends Component {
           fullName: '',
           userName: '',
           password: '',
-          passwordMatch: ''
+          passwordMatch: '',
+          redirect: true
         })
         this.props.onRegistrationSuccess()
       })
      .catch(res => {
        this.setState({ error: res.error })
      })
-      this.props.history.push('/app')
     }
-
   }
 
   onChange = e => {
@@ -68,7 +69,7 @@ export default class RegistrationForm extends Component {
   }
 
   render() {
-    const { error, fullName, userName, password, passwordMatch } = this.state
+    const { error, fullName, userName, password, passwordMatch, redirect } = this.state
     const inputs = [
       {
         labelFor: 'RegistrationForm__full_name',
@@ -103,6 +104,11 @@ export default class RegistrationForm extends Component {
         inputValue: passwordMatch
       },
     ]
+
+    if (redirect) {
+      return <Redirect to='/app'/>;
+    }
+
     return (
       <Form className="RegistrationForm" onSubmit={this.handleSubmit}>
         <Fieldset>

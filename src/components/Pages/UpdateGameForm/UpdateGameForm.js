@@ -16,7 +16,7 @@ class UpdateGameForm extends Component {
       currentGame: false,
       notes: "",
       updateGameTime: "",
-      updateComplete: null,
+      updateComplete: false,
       titleValid: false,
       formValid: false,
       validationMessages: {
@@ -44,34 +44,23 @@ class UpdateGameForm extends Component {
       })
     })
   }
-
-  updateName = title =>
-    this.setState({ title }, () => {
-      this.validateTitle(title);
-    });
-
+  
+  updateName = title => this.setState({ title }, () => {this.validateTitle(title)});
+  
+  updateContent = e => this.setState({ notes: e.target.value });
+  
+  updateCurrentGame = () => this.setState({ currentGame: !this.state.currentGame });
+  
+  updateGameComplete = () => this.setState({ updateComplete: !this.state.updateComplete });
+  
+  updateGameTime = e => this.setState({ updateGameTime: e.target.value });
+  
   updateConsole = e => {
     const { consoles } = this.context
     const selectedConsole = consoles.filter(cId => parseInt(cId.console_id) === parseInt(e.target.value));
     const newConsoleId = parseInt(selectedConsole[0].console_id)
-
+    
     this.setState({ consoleId: newConsoleId }, this.formValid)
-  }
-
-  updateContent = e => {
-    this.setState({ notes: e.target.value });
-  };
-
-  updateCurrentGame = () => {
-    this.setState({ currentGame: !this.state.currentGame });
-  }
-
-  updateGameComplete = () => {
-    this.setState({ updateComplete: !this.state.updateComplete });
-  }
-
-  updateGameTime = e => {
-    this.setState({ updateGameTime: e.target.value });
   }
 
   validateTitle(fieldValue) {
@@ -120,14 +109,13 @@ class UpdateGameForm extends Component {
       time_to_complete: updateGameTime,
       is_complete: updateComplete
     }
-    console.log(game)
     GameApiService.updateUserGame(game, id)
     .then(updatedGame => {
-      console.log("Game Updated")
+      console.log(updatedGame)
     })
     .catch(error => console.error({ error }))
     this.context.updateGame(game)
-    this.props.history.push(`/app/console/${game.console_id}`);
+    this.props.history.push(`/app/console/${game.console_id}`)
   };
 
   render() {
@@ -150,7 +138,7 @@ class UpdateGameForm extends Component {
                 placeholder="Enter Note Name"
                 id="name"
                 value={title}
-                onChange={e => this.updateName(e.target.value)}
+                onChange={this.updateName}
               />
             </p>
 

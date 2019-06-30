@@ -33,6 +33,7 @@ const NavLink = styled.li`
 
 const handleLogoutClick = () => {
     TokenService.clearAuthToken()
+    this.props.history.push('/')
 }
 
 const renderLogoutLink = () => {

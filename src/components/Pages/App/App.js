@@ -63,7 +63,6 @@ class App extends Component {
     
     handleDeleteGame = gameId => {
         const { games } = this.state
-        console.log(gameId)
         const newGames = games.filter(game => game.id !== gameId)
         this.setState({
             games: newGames

@@ -27,15 +27,6 @@ class AddGameForm extends Component {
 
   static contextType = GamesContext
 
-  componentDidMount() {
-    GameApiService.getMaxGameId()
-    .then(gameId => {
-      const currentId = gameId.id + 1
-      this.setState({ id: currentId })
-    })
-    // .then(gameId => console.log(gameId))
-  }
-
   updateName = e => {
     const title = e.target.value
     this.setState({ title }, () => {
@@ -105,16 +96,14 @@ class AddGameForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { id, title, consoleId, currentGame, notes, updateGameTime } = this.state
+    const { title, consoleId, currentGame, notes, updateGameTime } = this.state
     
     const game = {
-      id,
       title,
       console_id: consoleId,
       current_game: currentGame,
       notes,
       time_to_complete: updateGameTime,
-      user_id: 1
     }
 
     // FETCH GAME DATA FROM IGDB
@@ -122,7 +111,7 @@ class AddGameForm extends Component {
     // POST NEW GAME
     GameApiService.postUserGame(game)
     .then(newGame => {
-      this.context.addGame(game)
+      this.context.addGame(newGame)
       this.props.history.push(`/app/console/${game.console_id}`)
     })
   }

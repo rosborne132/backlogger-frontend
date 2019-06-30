@@ -65,14 +65,13 @@ class AddConsoleForm extends Component {
   handleSubmit = e => {
     e.preventDefault()
     const { consoleId, consoleName } = this.state 
-    const newConsole = {
-      user_id: 1,
-      console_id: consoleId,
-      title: consoleName
-    }
-    ConsoleApiService.postUserConsole(consoleId, 1)
-      .then(console => {
-        this.context.addConsole(newConsole)
+    ConsoleApiService.postUserConsole(consoleId)
+      .then(newConsole => {
+        const newConsoleContext = {
+          title: consoleName,
+          ...newConsole
+        }
+        this.context.addConsole(newConsoleContext)
         this.props.history.push(`/app`)
       })
       .catch(error => {
