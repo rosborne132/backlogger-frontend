@@ -2,7 +2,6 @@ import React, { Component, Suspense } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import { ConsoleList, ConsolePageNav } from '../../SideNav'
-import { AddGameForm, AddConsoleForm } from '../../Pages'
 
 import GamesContext from '../../../context/GamesContext'
 
@@ -15,8 +14,8 @@ const GamePageMain  = React.lazy(() => import('../GamePageMain/GamePageMain'))
 const AllGamesPageMain  = React.lazy(() => import('../AllGamesPageMain/AllGamesPageMain'))
 const GameCompletedMain  = React.lazy(() => import('../GameCompletedMain/GameCompletedMain'))
 const GameDetailsPage  = React.lazy(() => import('../GameDetailsPage/GameDetailsPage'))
-// const AddConsoleForm  = React.lazy(() => import('../AddConsoleForm/AddConsoleForm'))
-// const AddGameForm  = React.lazy(() => import('../AddGameForm/AddGameForm'))
+const AddConsoleForm  = React.lazy(() => import('../AddConsoleForm/AddConsoleForm'))
+const AddGameForm  = React.lazy(() => import('../AddGameForm/AddGameForm'))
 const UpdateGameForm  = React.lazy(() => import('../UpdateGameForm/UpdateGameForm'))
 
 
