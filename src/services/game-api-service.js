@@ -66,8 +66,8 @@ const GameApiService = {
     })
       .then(res =>
         (!res.ok)
-          ? res.json().then(e => Promise.reject(e))
-          : res.json()
+          ? console.log("Deleted", res)
+          : res.ok
       )
   }
 }

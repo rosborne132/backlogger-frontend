@@ -11,7 +11,7 @@ class AllGamesPageMain extends PureComponent {
     static contextType = GamesContext
     render() {
         const getGamesForConsole = (games = []) => games.filter(game => game.current_game !== true && game.is_complete !== true)     
-        const getCurrentGame = (games = []) => games.filter(game => game.current_game === true) 
+        const getCurrentGame = (games = []) => games.filter(game => game.current_game === true && game.is_complete !== true) 
         
         const { games } = this.context
         

@@ -18,7 +18,6 @@ const AddConsoleForm  = React.lazy(() => import('../AddConsoleForm/AddConsoleFor
 const AddGameForm  = React.lazy(() => import('../AddGameForm/AddGameForm'))
 const UpdateGameForm  = React.lazy(() => import('../UpdateGameForm/UpdateGameForm'))
 
-
 class App extends Component {
     constructor(props) {
         super(props)

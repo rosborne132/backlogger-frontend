@@ -6,10 +6,13 @@ import AuthApiService from '../../../services/auth-api-service'
 import { Form, Fieldset, Legend } from "../../StyledComponents"
 import { Button, InputGroup } from '../../Utils/Utils'
 
+import UserContext from '../../../context/UserContext'
+
 export default class LoginForm extends Component {
   static defaultProps = {
     onLoginSuccess: () => {}
   }
+  static contextType = UserContext
 
   state = { 
     userName: "",
@@ -22,6 +25,7 @@ export default class LoginForm extends Component {
     e.preventDefault()
     this.setState({ error: null })
     const { userName, password } = this.state
+    const { updateLoginStatus } = this.context
 
     TokenService.saveAuthToken(
       TokenService.makeBasicAuthToken(userName, password)
@@ -35,6 +39,7 @@ export default class LoginForm extends Component {
       TokenService.saveAuthToken(res.authToken)
       this.setState({ userName: "", password: "", redirect: true })
       this.props.onLoginSuccess()
+      updateLoginStatus()
     })
     .catch(res => {
       this.setState({ error: res.error })

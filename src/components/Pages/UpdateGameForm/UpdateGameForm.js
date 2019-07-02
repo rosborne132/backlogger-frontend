@@ -17,6 +17,7 @@ class UpdateGameForm extends Component {
       notes: "",
       updateGameTime: "",
       updateComplete: false,
+      updateCompleteDisabled: false,
       titleValid: false,
       formValid: false,
       validationMessages: {
@@ -25,10 +26,19 @@ class UpdateGameForm extends Component {
     };
   }
 
-  static contextType = GamesContext;
+  static contextType = GamesContext
 
   componentDidMount() {
     const gameId = parseInt(this.props.match.params.gameId)
+    const { games } = this.context
+    games.map(game => {
+      if(game.is_complete) {
+        this.setState({
+          updateCompleteDisabled: true
+        })
+      }
+      return ""
+    })
 
     GameApiService.getUserGame(gameId)
     .then(game => {
@@ -45,7 +55,7 @@ class UpdateGameForm extends Component {
     })
   }
   
-  updateName = title => this.setState({ title }, () => {this.validateTitle(title)});
+  updateTitle = e => this.setState({ title: e.target.value }, () => {this.validateTitle()});
   
   updateContent = e => this.setState({ notes: e.target.value });
   
@@ -63,16 +73,16 @@ class UpdateGameForm extends Component {
     this.setState({ consoleId: newConsoleId }, this.formValid)
   }
 
-  validateTitle(fieldValue) {
+  validateTitle() {
+    const { title } = this.state
     const fieldErrors = { ...this.state.validationMessages };
     let hasError = false;
 
-    fieldValue = fieldValue.trim();
-    if (fieldValue.length === 0) {
+    if (title.length === 0) {
       fieldErrors.name = "Name is required";
       hasError = true;
     } else {
-      if (fieldValue.length < 2) {
+      if (title.length < 2) {
         fieldErrors.name = "Name must be at least 2 characters long";
         hasError = true;
       } else {
@@ -118,9 +128,32 @@ class UpdateGameForm extends Component {
     this.props.history.push(`/app/console/${game.console_id}`)
   };
 
+  createUpdatedCheckox = (updateComplete, updateGameComplete, updateCompleteDisabled) => {
+    if(updateCompleteDisabled) {
+      return (
+        <Checkbox 
+        type="checkbox"
+        name="updateComplete"
+        checked={updateComplete}
+        onChange={updateGameComplete}
+        disabled
+        />
+      )
+    } else {
+      return (
+        <Checkbox 
+        type="checkbox"
+        name="updateComplete"
+        checked={updateComplete}
+        onChange={updateGameComplete}
+        />
+      )
+    }
+  }
+
   render() {
     const { consoles } = this.context
-    const { title, consoleId, currentGame, notes, updateGameTime, updateComplete } = this.state
+    const { title, consoleId, currentGame, notes, updateGameTime, updateComplete, updateCompleteDisabled } = this.state
 
     return (
       <>
@@ -138,7 +171,7 @@ class UpdateGameForm extends Component {
                 placeholder="Enter Note Name"
                 id="name"
                 value={title}
-                onChange={this.updateName}
+                onChange={this.updateTitle}
               />
             </p>
 
@@ -169,12 +202,13 @@ class UpdateGameForm extends Component {
 
             <p style={{display: "flex", justifyContent: "space-between"}}>
               <Label htmlFor="currentGame">Current Game:</Label>
-              <Checkbox 
+              {/* <Checkbox 
                 type="checkbox"
                 name="currentGame"
                 checked={currentGame}
                 onChange={this.updateCurrentGame}
-                />
+                /> */}
+                {this.createUpdatedCheckox(currentGame, this.updateCurrentGame, updateCompleteDisabled)}
             </p>
 
             <p style={{display: "flex", justifyContent: "space-between"}}>

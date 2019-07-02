@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import TokenService from '../../services/token-service'
+import UserContext from '../../context/UserContext'
 
 const Nav = styled.nav`
     position: relative;
@@ -31,46 +32,47 @@ const NavLink = styled.li`
     }
 `
 
-const handleLogoutClick = () => {
-    TokenService.clearAuthToken()
-    this.props.history.push('/')
-}
+class Navbar extends Component {
+    static contextType = UserContext
+    
+    handleLogoutClick = () => {
+        TokenService.clearAuthToken()
+        this.props.history.push('/')
+    }
+    
+    renderLogoutLink = () => {
+        return (
+          <NavLink>
+            <Link
+              onClick={this.handleLogoutClick}
+              to='/'>
+              Logout
+            </Link>
+          </NavLink>
+        )
+    }
+    
+    renderLoginLink = () => {
+        return (
+            <>
+                <NavLink><Link to='/login'>Login</Link></NavLink>
+                <NavLink><Link to='/register'>Signup</Link></NavLink>
+            </>
+        )
+    }
 
-const renderLogoutLink = () => {
-    return (
-      <NavLink>
-        <Link
-          onClick={handleLogoutClick}
-          to='/'>
-          Logout
-        </Link>
-      </NavLink>
-    )
-}
-
-const renderLoginLink = () => {
-    return (
-        <>
-            <NavLink><Link to='/login'>Login</Link></NavLink>
-            <NavLink><Link to='/register'>Signup</Link></NavLink>
-        </>
-    )
-}
-
-
-
-const Navbar = () => {
-    return (
-        <>
+    render() {
+        const { isLoggedIn } = this.context
+        return (
             <Nav role="navigation">
                 <ul>
-                    {TokenService.hasAuthToken()
-                        ? renderLogoutLink()
-                        : renderLoginLink()}
+                    {TokenService.hasAuthToken() || isLoggedIn
+                        ? this.renderLogoutLink()
+                        : this.renderLoginLink()}
                 </ul>
             </Nav>
-        </>
-    )
+        )
+    }
 }
 
 export default Navbar
