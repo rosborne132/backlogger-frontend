@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import { Checkbox, FormSubmitButton, Form, Fieldset, Legend, Label, Input, Select, Textarea } from "../../StyledComponents"
-import { ValidationError } from '../../Utils/Utils'
+import formStyles from "../../StyledComponents/Form.modules.css"
+import { ValidationError, Required } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
 import GameApiService from "../../../services/game-api-service";
@@ -131,22 +131,24 @@ class UpdateGameForm extends Component {
   createUpdatedCheckox = (updateComplete, updateGameComplete, updateCompleteDisabled) => {
     if(updateCompleteDisabled) {
       return (
-        <Checkbox 
-        type="checkbox"
-        name="updateComplete"
-        checked={updateComplete}
-        onChange={updateGameComplete}
-        disabled
-        />
+        <input 
+          type="checkbox"
+          name="updateComplete"
+          className={formStyles.checkbox}
+          checked={updateComplete}
+          onChange={updateGameComplete}
+          disabled
+          />
       )
     } else {
       return (
-        <Checkbox 
-        type="checkbox"
-        name="updateComplete"
-        checked={updateComplete}
-        onChange={updateGameComplete}
-        />
+        <input 
+          type="checkbox"
+          name="updateComplete"
+          className={formStyles.checkbox}
+          checked={updateComplete}
+          onChange={updateGameComplete}
+          />
       )
     }
   }
@@ -157,78 +159,68 @@ class UpdateGameForm extends Component {
 
     return (
       <>
-        <Form onSubmit={this.handleSubmit}>
-          <Legend style={{display: "flex", justifyContent: "center"}}>Update game!</Legend>
+        <form style={formStyles.form} onSubmit={this.handleSubmit}>
+          <legend style={formStyles.legend}>Update game!</legend>
           <ValidationError
             hasError={!this.state.titleValid}
             message={this.state.validationMessages.name}
           />
-          <Fieldset>
+          <fieldset style={formStyles.fieldset}>
             <p>
-              <Label htmlFor="name">Name: </Label>
-              <Input
+              <label style={formStyles.label} htmlFor="name">Name: <Required /></label>
+              <input
                 type="text"
                 placeholder="Enter Note Name"
                 id="name"
+                style={formStyles.input}
                 value={title}
                 onChange={this.updateTitle}
               />
             </p>
 
             <p>
-              <Label htmlFor="console">Console: </Label>
-              <Select name="console" value={consoleId} onChange={this.updateConsole}>
+              <label style={formStyles.label} htmlFor="console">Console: <Required /></label>
+              <select style={formStyles.select} name="console" value={consoleId} onChange={this.updateConsole}>
                 {consoles.map(console => (
                   <option key={console.console_id} value={console.console_id}>{console.title}</option>
                 ))}
-              </Select>
+              </select>
             </p>
 
             <p>
-              <Label htmlFor="gameConsole">Time Expected to Complete:</Label>
-                <Select name="gameConsole" value={updateGameTime} onChange={this.updateGameTime}>
+              <label style={formStyles.label} htmlFor="gameConsole">Time Expected to Complete:</label>
+                <select style={formStyles.select} name="gameConsole" value={updateGameTime} onChange={this.updateGameTime}>
                   <option value="1-10hrs">1-10hrs</option>
                   <option value="10-20hrs">10-20hrs</option>
                   <option value="20-30hrs">20-30hrs</option>
                   <option value="30-40hrs">30-40hrs</option>
                   <option value="50-60hrs">50-60hrs</option>
-                </Select>
+                </select>
             </p>
 
             <p>
-              <Label htmlFor="notes">Notes: </Label>
-              <Textarea value={notes} onChange={this.updateContent} />
+              <label style={formStyles.label} htmlFor="notes">Notes: </label>
+              <textarea style={formStyles.textarea} value={notes} onChange={this.updateContent} />
             </p>
 
             <p style={{display: "flex", justifyContent: "space-between"}}>
-              <Label htmlFor="currentGame">Current Game:</Label>
-              {/* <Checkbox 
-                type="checkbox"
-                name="currentGame"
-                checked={currentGame}
-                onChange={this.updateCurrentGame}
-                /> */}
+              <label style={formStyles.label} htmlFor="currentGame">Current Game:</label>
                 {this.createUpdatedCheckox(currentGame, this.updateCurrentGame, updateCompleteDisabled)}
             </p>
 
             <p style={{display: "flex", justifyContent: "space-between"}}>
-              <Label htmlFor="updateComplete">Game Complete:</Label>
-              <Checkbox 
+              <label style={formStyles.label} htmlFor="updateComplete">Game Complete:</label>
+              <input 
                 type="checkbox"
                 name="updateComplete"
+                className={formStyles.checkbox} 
                 checked={updateComplete}
                 onChange={this.updateGameComplete}
                 />
             </p>
-          </Fieldset>
-          <FormSubmitButton
-            style={{ margin: "5px auto" }}
-            buttonWidth="50%"
-            type="submit"
-          >
-            Submit
-          </FormSubmitButton>
-        </Form>
+          </fieldset>
+          <button type="submit" style={formStyles.button}>Submit</button>
+        </form>
       </>
     );
   }

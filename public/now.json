@@ -1,0 +1,22 @@
+{
+    "version": 2,
+    "alias": "rosborne132-backlogger-app",
+    "name": "backlogger-app",
+    "routes": [
+        {
+            "src": "^/static/(.*)",
+            "dest": "/static/$1"
+        },
+        {
+            "src": ".*",
+            "dest": "/index.html"
+        },
+        {
+            "src": "/app/(.*)",
+            "headers": {
+                "cache-control": "s-maxage=604800"
+            },
+            "dest": "/app/$1"
+        }
+    ]
+}

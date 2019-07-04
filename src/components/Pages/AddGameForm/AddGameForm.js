@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 
-import { Checkbox, FormSubmitButton, Form, Fieldset, Legend, Label, Input, Select, Textarea } from "../../StyledComponents"
-import { ValidationError } from '../../Utils/Utils'
+import formStyles from "../../StyledComponents/Form.modules.css"
+import { ValidationError, Required } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
 import GameApiService from "../../../services/game-api-service";
@@ -121,69 +121,64 @@ class AddGameForm extends Component {
 
     return (
       <>
-        <Form onSubmit={this.handleSubmit}>
-          <Legend style={{display: "flex", justifyContent: "center"}}>Add a new game to play!</Legend>
+        <form style={formStyles.form} onSubmit={this.handleSubmit}>
+          <legend style={formStyles.legend}>Add a new game to play!</legend>
           <ValidationError
             hasError={!this.state.titleValid}
             message={this.state.validationMessages.name}
           />
-          <Fieldset>
+          <fieldset style={formStyles.fieldset}>
             <p>
-              <Label htmlFor="name">Name: </Label>
-              <Input
+              <label style={formStyles.label} htmlFor="name">Name: <Required /></label>
+              <input
                 type="text"
                 placeholder="Enter Note Name"
+                style={formStyles.input}
                 id="name"
                 onChange={this.updateName}
               />
             </p>
 
             <p>
-              <Label htmlFor="console">Console: </Label>
-              <Select name="console" onChange={this.updateConsole}>
+              <label style={formStyles.label} htmlFor="console">Console: <Required /></label>
+              <select style={formStyles.select} name="console" onChange={this.updateConsole}>
                 <option >Select your console</option>
                 {consoles.map(console => (
                   <option key={console.id} value={console.console_id}>{console.title}</option>
                 ))}
-              </Select>
+              </select>
             </p>
 
             <p>
-              <Label htmlFor="gameConsole">Time Expected to Complete:</Label>
-                <Select name="gameConsole" onChange={this.updateGameTime}>
+              <label style={formStyles.label} htmlFor="gameConsole">Time Expected to Complete:</label>
+                <select style={formStyles.select} name="gameConsole" onChange={this.updateGameTime}>
                   <option>Select your time</option>
                   <option value="1-10hrs">1-10hrs</option>
                   <option value="10-20hrs">10-20hrs</option>
                   <option value="20-30hrs">20-30hrs</option>
                   <option value="30-40hrs">30-40hrs</option>
                   <option value="50-60hrs">50-60hrs</option>
-                </Select>
+                </select>
             </p>
 
             <p>
-              <Label htmlFor="notes">Notes: </Label>
-              <Textarea onChange={this.updateContent} />
+              <label style={formStyles.label} htmlFor="notes">Notes: </label>
+              <textarea style={formStyles.textarea} onChange={this.updateContent} />
             </p>
 
             <p style={{display: "flex", justifyContent: "space-between"}}>
-              <Label htmlFor="currentGame">Current Game:</Label>
-              <Checkbox 
+              <label style={formStyles.label} htmlFor="currentGame">Current Game:</label>
+              <input 
                 type="checkbox"
                 name="currentGame"
+                className={formStyles.checkbox}
                 checked={this.state.currentGame}
                 onChange={this.updateCurrentGame}
                 />
             </p>
-          </Fieldset>
-          <FormSubmitButton
-            style={{ margin: "5px auto" }}
-            buttonWidth="50%"
-            type="submit"
-            disabled={!this.state.formValid}
-          >
-            Submit
-          </FormSubmitButton>
-        </Form>
+          </fieldset>
+          <button type="submit" disabled={!this.state.formValid} style={formStyles.button}>Submit</button>
+        </form>
       </>
     )
   }

@@ -1,7 +1,6 @@
 import React, { Component } from "react"
-// import axios from 'axios'
 
-import { FormSubmitButton, Form, Fieldset, Legend, Select } from "../../StyledComponents"
+import formStyles from "../../StyledComponents/Form.modules.css"
 import { ValidationError } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
@@ -28,8 +27,9 @@ class AddConsoleForm extends Component {
 
     ConsoleApiService.getConsoles()
       .then(consoles => {
+        const userConsoles = consoles.sort((a, b) => a.title.localeCompare(b.title))
         this.setState({
-          consoleOptions: [consoleOptionTitle, ...consoles]
+          consoleOptions: [consoleOptionTitle, ...userConsoles]
         })
       })
   }
@@ -90,25 +90,18 @@ class AddConsoleForm extends Component {
     const consoleChoices = consoleOptions.filter(consoleOption => !consoles.some(console => console.console_id === consoleOption.id))
     return (
       <>
-        <Form onSubmit={e => this.handleSubmit(e)}>
-          <Legend style={{display: "flex", justifyContent: "center"}}>Add a Console</Legend>
+        <form style={formStyles.form} onSubmit={this.handleSubmit}>
+          <legend style={formStyles.legend}>Add a Console</legend>
           <ValidationError
             hasError={!this.state.consoleOptions}
           />
-          <Fieldset>
-            <Select onChange={this.updateConsole}>
+          <fieldset style={formStyles.fieldset}>
+            <select style={formStyles.select} onChange={this.updateConsole}>
               {consoleChoices.map(consoleChoice => <option key={consoleChoice.id} value={consoleChoice.title}>{this.capitalize(consoleChoice.title)}</option>)}
-            </Select>
-          </Fieldset>
-          <FormSubmitButton
-            style={{ margin: "5px auto" }}
-            buttonWidth="50%"
-            type="submit"
-            disabled={!this.state.formValid}
-          >
-            Submit
-          </FormSubmitButton>
-        </Form>
+            </select>
+          </fieldset>
+          <button type="submit"disabled={!this.state.formValid} style={formStyles.button}>Submit</button>
+        </form>
       </>
     )
   }

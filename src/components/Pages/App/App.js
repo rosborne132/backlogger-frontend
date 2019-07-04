@@ -1,5 +1,5 @@
 import React, { Component, Suspense } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, BrowserRouter } from 'react-router-dom'
 
 import { ConsoleList, ConsolePageNav } from '../../SideNav'
 
@@ -30,7 +30,10 @@ class App extends Component {
 
     componentDidMount() {
         ConsoleApiService.getUserConsoles()
-        .then(consoles => this.setState({ consoles }))
+        .then(consoles => {
+            const userConsoles = consoles.sort((a, b) => a.title.localeCompare(b.title))
+            this.setState({ consoles: userConsoles })
+        })
         GameApiService.getUserGames()
         .then(games => this.setState({ games }))
     }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 
-import { Button, InputGroup } from '../../Utils/Utils'
-import { Form, Fieldset, Legend } from "../../StyledComponents"
+import { InputGroup } from '../../Utils/Utils'
+import formStyles from "../../StyledComponents/Form.modules.css"
 import AuthApiService from '../../../services/auth-api-service'
 
 export default class RegistrationForm extends Component {
@@ -16,7 +16,11 @@ export default class RegistrationForm extends Component {
     password: '',
     passwordMatch: '',
     error: null,
-    redirect: false 
+    redirect: false,
+    passwordValid: false,
+    validationMessages: {
+      password: ""
+    }
   }
 
   handleSubmit = e => {
@@ -42,6 +46,8 @@ export default class RegistrationForm extends Component {
      .catch(res => {
        this.setState({ error: res.error })
      })
+    } else {
+      this.setState({ error: "Passwords do not match" })
     }
   }
 
@@ -49,6 +55,38 @@ export default class RegistrationForm extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  updatePassword = e => {
+    const password = e.target.value
+    this.setState({ password }, () => {
+      this.validatePassword(password) 
+    })
+  }
+
+  validatePassword(fieldValue) {
+    const fieldErrors = { ...this.state.validationMessages }
+    let hasError = false
+
+    if (fieldValue.length === 0) {
+      fieldErrors.password = "Password is required"
+      hasError = true
+    } else {
+      if (fieldValue.length < 2) {
+        fieldErrors.password = "Password must be at least 2 characters long"
+        hasError = true
+      } else {
+        fieldErrors.password = ""
+        hasError = false
+      }
+    }
+
+    this.setState(
+      {
+        validationMessages: fieldErrors,
+        passwordValid: !hasError
+      }
+    )
   }
 
   createInputs = inputs => {
@@ -62,7 +100,7 @@ export default class RegistrationForm extends Component {
           inputName={input.inputName}
           inputID={input.inputID}
           inputValue={input.inputValue}
-          onChange={this.onChange}
+          onChange={input.onChange}
           />
       )
     })
@@ -77,7 +115,8 @@ export default class RegistrationForm extends Component {
         inputType: 'text',
         inputName: 'fullName',
         inputID: 'RegistrationForm__full_name',
-        inputValue: fullName
+        inputValue: fullName,
+        onChange: this.onChange
       },
       {
         labelFor: 'RegistrationForm__user_name',
@@ -85,7 +124,8 @@ export default class RegistrationForm extends Component {
         inputType: 'text',
         inputName: 'userName',
         inputID: 'RegistrationForm__user_name',
-        inputValue: userName
+        inputValue: userName,
+        onChange: this.onChange
       },
       {
         labelFor: 'RegistrationForm__password',
@@ -93,7 +133,8 @@ export default class RegistrationForm extends Component {
         inputType: 'password',
         inputName: 'password',
         inputID: 'RegistrationForm__password',
-        inputValue: password
+        inputValue: password,
+        onChange: this.updatePassword
       },
       {
         labelFor: 'RegistrationForm__password_match',
@@ -101,7 +142,8 @@ export default class RegistrationForm extends Component {
         inputType: 'password',
         inputName: 'passwordMatch',
         inputID: 'RegistrationForm__password_match',
-        inputValue: passwordMatch
+        inputValue: passwordMatch,
+        onChange: this.onChange
       },
     ]
 
@@ -110,18 +152,18 @@ export default class RegistrationForm extends Component {
     }
 
     return (
-      <Form className="RegistrationForm" onSubmit={this.handleSubmit}>
-        <Fieldset>
-          <Legend>Sign Up</Legend>
+      <form style={formStyles.form} onSubmit={this.handleSubmit}>
+        <fieldset style={formStyles.fieldset}>
+          <legend style={formStyles.legend}>Sign Up</legend>
           <div role="alert">
             {error && <p className="red">{error}</p>}
           </div>
 
           {this.createInputs(inputs)}
 
-          <Button className="signUp" type="submit">Sign Up</Button>
-        </Fieldset>
-      </Form>
+          <button style={formStyles.button} type="submit">Sign Up</button>
+        </fieldset>
+      </form>
     )
   }
 }

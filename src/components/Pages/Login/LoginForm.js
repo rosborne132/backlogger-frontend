@@ -3,8 +3,8 @@ import { Redirect } from 'react-router'
 import TokenService from '../../../services/token-service'
 import AuthApiService from '../../../services/auth-api-service'
 
-import { Form, Fieldset, Legend } from "../../StyledComponents"
-import { Button, InputGroup } from '../../Utils/Utils'
+import formStyles from "../../StyledComponents/Form.modules.css"
+import { InputGroup } from '../../Utils/Utils'
 
 import UserContext from '../../../context/UserContext'
 
@@ -12,6 +12,7 @@ export default class LoginForm extends Component {
   static defaultProps = {
     onLoginSuccess: () => {}
   }
+  
   static contextType = UserContext
 
   state = { 
@@ -91,18 +92,18 @@ export default class LoginForm extends Component {
     }
 
     return (
-      <Form className='LoginForm' onSubmit={this.handleSubmitJwtAuth}>
-        <Fieldset>
-          <Legend>Sign In</Legend>
+      <form style={formStyles.form} onSubmit={this.handleSubmitJwtAuth}>
+        <fieldset style={formStyles.fieldset}>
+          <legend style={formStyles.legend}>Sign In</legend>
           <div role='alert'>
             {error && <p className='red'>{error}</p>}
           </div>
 
           {this.createInputs(inputs)}
           
-          <Button type='submit'>Login</Button>
-        </Fieldset>
-      </Form>
+          <button style={formStyles.button} type='submit'>Login</button>
+        </fieldset>
+      </form>
     )
   }
 }

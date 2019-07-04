@@ -1,17 +1,12 @@
 import React, { memo, PureComponent } from 'react'
-import { Label, Input } from "../StyledComponents"
+import formStyles from "../StyledComponents/Form.modules.css"
 import './Utils.css'
-
-
-export function Button({ className, ...props }) {
-  return <button className={['Button', className].join(' ')} {...props} />
-}
 
 export const InputGroup = memo(({ labelFor, labelText, inputType, inputName, inputID, inputValue, onChange }) => {
   return (
     <p>
-      <Label htmlFor={labelFor}>{labelText} <Required /></Label>
-      <Input type={inputType} name={inputName} value={inputValue} onChange={onChange} id={inputID} required />
+      <label style={formStyles.label} htmlFor={labelFor}>{labelText} <Required /></label>
+      <input style={formStyles.input} type={inputType} name={inputName} value={inputValue} onChange={onChange} id={inputID} required />
     </p>
   )
 })
