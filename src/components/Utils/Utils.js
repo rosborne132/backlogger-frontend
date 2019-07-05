@@ -4,7 +4,7 @@ import './Utils.css'
 
 export const InputGroup = memo(({ labelFor, labelText, inputType, inputName, inputID, inputValue, onChange }) => {
   return (
-    <p>
+    <p style={formStyles.p}>
       <label style={formStyles.label} htmlFor={labelFor}>{labelText} <Required /></label>
       <input style={formStyles.input} type={inputType} name={inputName} value={inputValue} onChange={onChange} id={inputID} required />
     </p>

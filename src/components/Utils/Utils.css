@@ -1,11 +1,30 @@
 .Input,
 .Textarea {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   padding: 10px;
   margin: 8px 0;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.Input::-webkit-input-placeholder,
+.Textarea::-webkit-input-placeholder {
+  color: #ccc;
+}
+
+.Input:-ms-input-placeholder,
+.Textarea:-ms-input-placeholder {
+  color: #ccc;
+}
+
+.Input::-ms-input-placeholder,
+.Textarea::-ms-input-placeholder {
+  color: #ccc;
 }
 
 .Input::placeholder,
@@ -18,7 +37,9 @@
 }
 
 .Button {
-  order: 1px solid #aaa;
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1px solid #aaa;
+          order: 1px solid #aaa;
   background-color: #eee;
   font-size: 1.1em;
   border-radius: 4px;
