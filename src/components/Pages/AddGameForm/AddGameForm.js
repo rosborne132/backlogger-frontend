@@ -122,12 +122,12 @@ class AddGameForm extends Component {
     return (
       <>
         <form style={formStyles.form} onSubmit={this.handleSubmit}>
-          <legend style={formStyles.legend}>Add a new game to play!</legend>
           <ValidationError
             hasError={!this.state.titleValid}
             message={this.state.validationMessages.name}
           />
           <fieldset style={formStyles.fieldset}>
+            <legend style={formStyles.legend}>Add a new game to play!</legend>
             <p>
               <label style={formStyles.label} htmlFor="name">Name: <Required /></label>
               <input
@@ -142,7 +142,7 @@ class AddGameForm extends Component {
             <p>
               <label style={formStyles.label} htmlFor="console">Console: <Required /></label>
               <select style={formStyles.select} name="console" onChange={this.updateConsole}>
-                <option >Select your console</option>
+                <option style={formStyles.option}>Select your console</option>
                 {consoles.map(console => (
                   <option key={console.id} value={console.console_id}>{console.title}</option>
                 ))}
