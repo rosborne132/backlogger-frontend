@@ -99,17 +99,41 @@ button:hover {
     cursor: pointer;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
     form {
-        max-width: 300px;
+        width: 275px;
+    }
+    fieldset {
+        max-width: 90%;
+    }
+    label {
+        font-size: 16px;
+    }
+    input, select, textarea {
+        padding: 4px;
+        font-size: inherit;
     }
     button {
         width: 100%
     }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 500px) {
     form {
-        max-width: 175px;
+        width: 250px;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    form {
+        width: 200px;
+        margin: 0 -20px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    form {
+        width: 150px;
+        margin: 0 -20px;
     }
 }
