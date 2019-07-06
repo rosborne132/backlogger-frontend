@@ -24,14 +24,16 @@ class Home extends Component {
 
     return (
       <UserContext.Provider value={contextValue}>
-        <div className="homeLayout">
+        <div >
           <Navbar />
+          <div className="homeLayout">
           <Switch>
             <Route exact path='/' component={Landing} />
             <PublicOnlyRoute path='/login' component={LoginForm}/>
             <PublicOnlyRoute path='/register' component={RegistrationForm}/>
             <PrivateRoute path='/app' component={App}/>
           </Switch>
+          </div>
         </div>
       </UserContext.Provider>
     )

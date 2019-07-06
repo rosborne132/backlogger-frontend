@@ -31,8 +31,8 @@ class Game extends PureComponent {
         <GameBody></GameBody>
 
         <GameIcons>
-            <Link to={`#`} onClick={this.handleDeleteNote}><FontAwesomeIcon style={{color: "red"}} onClick={this.handleDeleteGame} icon={faMinusSquare} /></Link>
-            <Link to={`/app/updateGame/${id}`}><FontAwesomeIcon style={{color: "green"}} icon={faPenSquare} /></Link>
+            <Link to={`#`} onClick={this.handleDeleteNote}><FontAwesomeIcon style={{color: "#C20500"}} onClick={this.handleDeleteGame} icon={faMinusSquare} /></Link>
+            <Link to={`/app/updateGame/${id}`}><FontAwesomeIcon style={{color: "#00FAAB"}} icon={faPenSquare} /></Link>
         </GameIcons>
       </GameStyles>
     )

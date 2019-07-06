@@ -18,7 +18,7 @@ const Nav = styled.nav`
 
 const NavLink = styled.li`
     display: inline;
-    padding: 0 1%;
+    padding: 0 2%;
 
     a {
         color: #fff;
@@ -29,6 +29,10 @@ const NavLink = styled.li`
     a:hover {
         cursor: pointer;
         color: rgb(139, 139, 139);
+    }
+
+    @media only screen and (max-width: 350px) {
+        padding: 0 4%;
     }
 `
 
@@ -42,7 +46,7 @@ class Navbar extends Component {
     
     renderLogoutLink = () => {
         return (
-          <NavLink>
+          <NavLink style={{marginLeft: "-30px"}}>
             <Link
               onClick={this.handleLogoutClick}
               to='/'>
@@ -55,7 +59,7 @@ class Navbar extends Component {
     renderLoginLink = () => {
         return (
             <>
-                <NavLink><Link to='/login'>Login</Link></NavLink>
+                <NavLink style={{marginLeft: "-30px"}}><Link to='/login'>Login</Link></NavLink>
                 <NavLink><Link to='/register'>Signup</Link></NavLink>
             </>
         )

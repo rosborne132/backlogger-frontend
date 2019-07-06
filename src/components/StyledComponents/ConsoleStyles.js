@@ -5,6 +5,11 @@ export const Console = styled.li`
   display: block;
   padding: 10px;
   border: 1px solid #000;
+  background: linear-gradient(to right, white 50%, black 50%);
+  background-position:left bottom;
+  background-size: 200% 100%;
+  transition: all 0.5s ease;
+
   span {
     display: inline-block;
     padding: 4px;
@@ -15,7 +20,7 @@ export const Console = styled.li`
   }
 
   :hover {
-    background-color: #000;
+    background-position: right bottom;
     span {
       color: #fff;
     }

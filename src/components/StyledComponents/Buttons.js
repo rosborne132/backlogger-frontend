@@ -6,6 +6,10 @@ export const Button = styled.a`
   display: block;
   border: 1px solid #000;
   text-align: center;
+  background: linear-gradient(to right, white 50%, black 50%);
+  background-position:left bottom;
+  background-size: 200% 100%;
+  transition: all 0.5s ease;
 
   a {
     color: #000;
@@ -13,12 +17,9 @@ export const Button = styled.a`
   }
 
   :hover {
-    background-color: #000;
     color: #fff;
+    background-position: right bottom;
     cursor: pointer;
-    a {
-      color: #fff;
-    }
   }
 `
 
@@ -28,10 +29,14 @@ export const LinkButton = styled.div`
   border: 1px solid #000;
   text-align: center;
   color: #000;
+  background: linear-gradient(to right, white 50%, black 50%);
+  background-position:left bottom;
+  background-size: 200% 100%;
+  transition: all 0.5s ease;
 
   :hover {
-    background-color: #000;
     color: #fff;
+    background-position: right bottom;
     cursor: pointer;
   }
 `

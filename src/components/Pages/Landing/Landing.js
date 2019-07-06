@@ -13,7 +13,7 @@ class Landing extends Component {
                         <h1>Backlogger</h1>
                     </header>
     
-                    <section>
+                    <section style={{ backgroundColor: "#7658B5", color: "#000"}}>
                         <header>
                             <h3>Keep track of the games you want to play</h3>
                         </header>
@@ -21,15 +21,15 @@ class Landing extends Component {
                         <p>When keeping up with new video game releases it becomes difficult to remember what games you have been meaning to play.</p>
                     </section>
     
-                    <section>
+                    <section style={{ backgroundColor: "#000", color: "#fff"}}>
                         <header>
                             <h3>Adding games to your backlog is extremely easy</h3>
                         </header>
                         <p>[<em>placeholder for screenshot of add game interface</em>]</p>
                         <p>Add games to your backlog with ease by filling out the console, title, and any comments you have.</p>
                     </section>
-    
-                    <section>
+                    
+                    <section style={{ backgroundColor: "#CBCAD0", color: "#000"}}>
                         <header>
                             <h3>Keep track of what game/games you are currently playing</h3>
                         </header>

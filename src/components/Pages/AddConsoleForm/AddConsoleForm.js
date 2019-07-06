@@ -89,7 +89,6 @@ class AddConsoleForm extends Component {
     const { consoles } = this.context
     const consoleChoices = consoleOptions.filter(consoleOption => !consoles.some(console => console.console_id === consoleOption.id))
     return (
-      <>
         <form style={formStyles.form} onSubmit={this.handleSubmit}>
           <legend style={formStyles.legend}>Add a Console</legend>
           <ValidationError
@@ -102,7 +101,6 @@ class AddConsoleForm extends Component {
           </fieldset>
           <button type="submit"disabled={!this.state.formValid} style={formStyles.button}>Submit</button>
         </form>
-      </>
     )
   }
 }

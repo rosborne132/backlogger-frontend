@@ -21,17 +21,31 @@ main {
 
 #landingHeader h1 {
     color: #fff;
+    width: 100%;
     font-weight: 700;
-    font-size: 60px;
 }
 
 header {
     padding: 10% 0;
 }
+
+header h3{
+    display: inline-block;
+    margin: 0 auto;
+    width: 70%;
+}
   
 section {
     min-height: 200px;
+    width: 100%;
     padding: 4% 0;
+}
+
+section p{
+    display: inline-block;
+    margin: 0 auto;
+    padding: 10px 0;
+    width: 70%;
 }
 
 #signUp {
@@ -45,8 +59,4 @@ section {
 
 #signUp h3 {
     color: #fff;
-}
-
-section:nth-child(even) {
-    background-color: #ddd;
 }

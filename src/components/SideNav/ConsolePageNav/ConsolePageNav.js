@@ -20,7 +20,7 @@ class ConsolePageNav extends PureComponent {
 
         return (
             <>
-                <Button onClick={() => this.props.history.goBack()}>Back</Button>
+                <Button onClick={this.props.history.goBack}>Back</Button>
 
                 {console && <h3>{console.name}</h3>}
             </>
