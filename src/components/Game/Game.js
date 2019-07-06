@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinusSquare, faPenSquare } from '@fortawesome/free-solid-svg-icons'
 
 import { GameIcons, GameStyles, GameHeader, GameBody } from '../StyledComponents'
-// import config from "../config"
 
 import GamesContext from '../../context/GamesContext'
 import GameApiService from "../../services/game-api-service";
@@ -32,8 +31,8 @@ class Game extends PureComponent {
         <GameBody></GameBody>
 
         <GameIcons>
-            <Link to={`#`} onClick={this.handleDeleteNote}><FontAwesomeIcon onClick={this.handleDeleteGame} icon={faMinusSquare} /></Link>
-            <Link to={`/app/updateGame/${id}`}><FontAwesomeIcon icon={faPenSquare} /></Link>
+            <Link to={`#`} onClick={this.handleDeleteNote}><FontAwesomeIcon style={{color: "red"}} onClick={this.handleDeleteGame} icon={faMinusSquare} /></Link>
+            <Link to={`/app/updateGame/${id}`}><FontAwesomeIcon style={{color: "green"}} icon={faPenSquare} /></Link>
         </GameIcons>
       </GameStyles>
     )
