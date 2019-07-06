@@ -17,7 +17,6 @@ class UpdateGameForm extends Component {
       notes: "",
       updateGameTime: "",
       updateComplete: false,
-      updateCompleteDisabled: false,
       titleValid: false,
       formValid: false,
       validationMessages: {
@@ -128,34 +127,9 @@ class UpdateGameForm extends Component {
     this.props.history.push(`/app/console/${game.console_id}`)
   };
 
-  createUpdatedCheckox = (updateComplete, updateGameComplete, updateCompleteDisabled) => {
-    if(updateCompleteDisabled) {
-      return (
-        <input 
-          type="checkbox"
-          name="updateComplete"
-          className={formStyles.checkbox}
-          checked={updateComplete}
-          onChange={updateGameComplete}
-          disabled
-          />
-      )
-    } else {
-      return (
-        <input 
-          type="checkbox"
-          name="updateComplete"
-          className={formStyles.checkbox}
-          checked={updateComplete}
-          onChange={updateGameComplete}
-          />
-      )
-    }
-  }
-
   render() {
     const { consoles } = this.context
-    const { title, consoleId, currentGame, notes, updateGameTime, updateComplete, updateCompleteDisabled } = this.state
+    const { title, consoleId, currentGame, notes, updateGameTime, updateComplete } = this.state
 
     return (
       <>
@@ -205,7 +179,13 @@ class UpdateGameForm extends Component {
 
             <p style={{display: "flex", justifyContent: "space-between"}}>
               <label style={formStyles.label} htmlFor="currentGame">Current Game:</label>
-                {this.createUpdatedCheckox(currentGame, this.updateCurrentGame, updateCompleteDisabled)}
+              <input 
+                type="checkbox"
+                name="updateComplete"
+                className={formStyles.checkbox}
+                checked={currentGame}
+                onChange={this.updateCurrentGame}
+                />
             </p>
 
             <p style={{display: "flex", justifyContent: "space-between"}}>

@@ -39,9 +39,10 @@ class App extends Component {
     }
 
     handleAddConsole = console => {
-        this.setState({
-          consoles: [...this.state.consoles, console]
-        })
+        const { consoles } = this.state
+        const userConsoles = [...consoles , console]
+        const sortedConsoles = userConsoles.sort((a, b) => a.title.localeCompare(b.title))
+        this.setState({ consoles: sortedConsoles })
     }
     
     handleAddGame = game => {

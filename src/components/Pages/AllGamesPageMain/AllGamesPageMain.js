@@ -16,41 +16,53 @@ class AllGamesPageMain extends PureComponent {
         const { games } = this.context
         
         const gamesFromConsole = getGamesForConsole(games)
-        const currentGame = getCurrentGame(games)
+        const currentGames = getCurrentGame(games)
+
+        const displayCurrentGames = games => {
+            return (
+                <div>
+                    <header>
+                        <h3>Current Games</h3>
+                    </header>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <List>
+                            { games.map(game => (
+                                <Game 
+                                    key={game.id}
+                                    id={game.id}
+                                    title={game.title}
+                                />
+                            ))}
+                        </List>
+                    </Suspense>
+                </div>
+            )
+        }
+
+        const displayGames = games => {
+            return (
+                <List>
+                    <GameGrid>
+                        {games.map(game => (
+                            <GameItem key={game.id}>
+                                <Suspense fallback={<div>Loading...</div>}>
+                                    <Game 
+                                        id={game.id}
+                                        title={game.title}
+                                    />
+                                </Suspense>
+                            </GameItem>
+                        ))}
+                    </GameGrid>
+                </List>
+            )
+        }
+
         return (
             <>
                 <GameError>
-                    { currentGame.length 
-                    ?
-                        <div>
-                            <header>
-                                <h3>Current Game</h3>
-                            </header>
-                            <Suspense fallback={<div>Loading...</div>}>
-                                <Game 
-                                    id={currentGame[0].id}
-                                    title={currentGame[0].title}
-                                />
-                            </Suspense>
-                        </div>
-                    :
-                        ""
-                    }
-                    
-                    <List>
-                        <GameGrid>
-                            {gamesFromConsole.map(game => (
-                                <GameItem key={game.id}>
-                                    <Suspense fallback={<div>Loading...</div>}>
-                                        <Game 
-                                            id={game.id}
-                                            title={game.title}
-                                        />
-                                    </Suspense>
-                                </GameItem>
-                            ))}
-                        </GameGrid>
-                    </List>
+                    { currentGames.length ? displayCurrentGames(currentGames) : "" }
+                    { displayGames(gamesFromConsole) }
                 </GameError>
             </>
         )

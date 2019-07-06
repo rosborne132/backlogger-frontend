@@ -18,21 +18,21 @@ class ConsoleList extends PureComponent{
                 <List>
                     <NavLink to={`/app`}>
                         <Console>
-                            <span>{getAllUncompletedGames(games)}</span>
+                            <span>{ getAllUncompletedGames(games) }</span>
                             <span>In The Backlog</span>
                         </Console>
                     </NavLink>
                     <NavLink to={`/app/console`}>
                         <Console>
-                            <span>{countCompletedGames(games)}</span>
+                            <span>{ countCompletedGames(games) }</span>
                             <span>Completed Games</span>
                         </Console>
                     </NavLink>
                     {consoles.map(console => (
                         <NavLink to={`/app/console/${console.console_id}`} key={console.console_id}>
                             <Console>
-                                <span>{countGamesForConsole(games, console.console_id)}</span>
-                                <span>{console.title}</span>
+                                <span>{ countGamesForConsole(games, console.console_id) }</span>
+                                <span>{ console.title }</span>
                             </Console>
                         </NavLink>
                     ))}
@@ -41,9 +41,12 @@ class ConsoleList extends PureComponent{
                 <Link style={{textDecoration: "none"}} to="/app/addConsole">
                     <LinkButton>+ Console</LinkButton>
                 </Link>
-                <Link style={{textDecoration: "none"}} to="/app/addGame">
+                
+                { consoles.length 
+                ? <Link style={{textDecoration: "none"}} to="/app/addGame">
                     <LinkButton>+ Game</LinkButton>
-                </Link>
+                  </Link>
+                : "" }
             </>
         )
     }
