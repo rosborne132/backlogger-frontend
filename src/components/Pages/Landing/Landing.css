@@ -16,6 +16,7 @@ main {
 
 #landingHeader {
     min-height: 200px;
+    background-size: cover;
     background-image: url('../../../assets//images/lorenzo-herrera-1383917-unsplash.jpg');
 }
 

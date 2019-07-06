@@ -13,7 +13,6 @@ import './App.css'
 const GamePageMain  = React.lazy(() => import('../GamePageMain/GamePageMain'))
 const AllGamesPageMain  = React.lazy(() => import('../AllGamesPageMain/AllGamesPageMain'))
 const GameCompletedMain  = React.lazy(() => import('../GameCompletedMain/GameCompletedMain'))
-const GameDetailsPage  = React.lazy(() => import('../GameDetailsPage/GameDetailsPage'))
 const AddConsoleForm  = React.lazy(() => import('../AddConsoleForm/AddConsoleForm'))
 const AddGameForm  = React.lazy(() => import('../AddGameForm/AddGameForm'))
 const UpdateGameForm  = React.lazy(() => import('../UpdateGameForm/UpdateGameForm'))
@@ -99,7 +98,6 @@ class App extends Component {
                             <Route exact path="/app" component={AllGamesPageMain} />
                             <Route path="/app/console/:consoleId" component={GamePageMain} />
                             <Route path="/app/console" component={GameCompletedMain} />
-                            <Route path="/app/game/:gameId" component={GameDetailsPage} />
                             <Route path="/app/addConsole" component={AddConsoleForm} />
                             <Route path="/app/addGame" component={AddGameForm} />
                             <Route path="/app/updateGame/:gameId" component={UpdateGameForm} />

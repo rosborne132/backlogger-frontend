@@ -25,7 +25,7 @@ class Game extends PureComponent {
     return (
       <GameStyles>
         <GameHeader>
-          <Link to={`/app/game/${id}`}>{title}</Link>
+          <span>{title}</span>
         </GameHeader>
 
         <GameBody></GameBody>
