@@ -93,6 +93,11 @@ export default class LoginForm extends Component {
 
     return (
       <form style={formStyles.form} onSubmit={this.handleSubmitJwtAuth}>
+        <header>
+          <h3>Test Account</h3>
+          <p>User Name: testUser1</p>
+          <p>Password: testUser1!</p>
+        </header>
         <fieldset style={formStyles.fieldset}>
           <legend style={formStyles.legend}>Sign In</legend>
           <div role='alert'>

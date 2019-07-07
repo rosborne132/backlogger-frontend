@@ -1,8 +1,12 @@
 {
     "version": 2,
-    "alias": "rosborne132-backlogger-app",
+    "alias": "backlogger.net",
     "name": "backlogger-app",
     "routes": [
+        {
+            "src": "^/favicon.ico$",
+            "dest": "/favicon.ico"
+        },
         {
             "src": "^/static/(.*)",
             "dest": "/static/$1"
