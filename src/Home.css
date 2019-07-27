@@ -1,6 +1,6 @@
-.homeLayout {
+/* .homeLayout {
   text-align: center;
-}
+} */
 
 h1 {
   font-family: 'Roboto', sans-serif;
@@ -12,4 +12,8 @@ h3 {
 
 p, a {
   font-family: 'Roboto Mono', monospace;
+}
+
+input, button, label, legend {
+  font-family: Consolas, monaco, monospace; 
 }
