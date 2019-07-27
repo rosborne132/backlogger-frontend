@@ -152,7 +152,7 @@ export default class RegistrationForm extends Component {
     }
 
     return (
-      <form className="measure-narrow mv3 pa3 shadow-3 center" onSubmit={this.handleSubmit}>
+      <form className="br1 measure-narrow mv4 pa3 shadow-3 center bg-white black" onSubmit={this.handleSubmit}>
         <fieldset className="bn">
           <legend className="f3 tc">Sign Up</legend>
           <div role="alert">
@@ -161,9 +161,7 @@ export default class RegistrationForm extends Component {
 
           {this.createInputs(inputs)}
 
-          <p className="tc">
-            <button style={formStyles.button} className="ph3 pv2 mb2" type="submit">Sign Up</button>
-          </p>
+          <button style={formStyles.button} className="ph3 pv2 db center" type="submit">Sign Up</button>
         </fieldset>
       </form>
     )

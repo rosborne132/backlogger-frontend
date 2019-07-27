@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 
 import formStyles from "../../StyledComponents/Form.modules.css"
-import { ValidationError } from '../../Utils/Utils'
+import { Required } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
 
@@ -84,23 +84,33 @@ class AddConsoleForm extends Component {
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
+  createConsoleDropwdown = consoles => {
+    return (
+      <p>
+        <label className="flex pv2" htmlFor="console">Console: <Required /></label>
+        <select className="black bg-white w-100" name="console" onChange={this.updateConsole}>
+          <option>Select your console</option>
+          {consoles.map(console => (
+            <option key={console.id} value={console.console_id}>{console.title}</option>
+          ))}
+        </select>
+      </p>
+    )
+  }
+
   render() {
     const { consoleOptions } = this.state
     const { consoles } = this.context
     const consoleChoices = consoleOptions.filter(consoleOption => !consoles.some(console => console.console_id === consoleOption.id))
+
     return (
-        <form style={formStyles.form} onSubmit={this.handleSubmit}>
-          <legend style={formStyles.legend}>Add a Console</legend>
-          <ValidationError
-            hasError={!this.state.consoleOptions}
-          />
-          <fieldset style={formStyles.fieldset}>
-            <select style={formStyles.select} onChange={this.updateConsole}>
-              {consoleChoices.map(consoleChoice => <option key={consoleChoice.id} value={consoleChoice.title}>{this.capitalize(consoleChoice.title)}</option>)}
-            </select>
-          </fieldset>
-          <button type="submit"disabled={!this.state.formValid} style={formStyles.button}>Submit</button>
-        </form>
+      <form className="br1 measure mv4 pa3 shadow-3 center"  onSubmit={this.handleSubmit}>
+        <fieldset className="bn" style={formStyles.fieldset}>
+          <legend className="f3 tc">Add a Console</legend>
+          { this.createConsoleDropwdown(consoleChoices) }
+          <button type="submit" disabled={!this.state.formValid} style={formStyles.button} className="pa2 mv2 db center">Submit</button>
+        </fieldset>
+      </form>
     )
   }
 }

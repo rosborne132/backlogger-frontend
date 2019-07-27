@@ -93,18 +93,16 @@ export default class LoginForm extends Component {
     }
 
     return (
-      <form style={formStyles.form} className="measure-narrow mv3 pa3 shadow-3 center" onSubmit={this.handleSubmitJwtAuth}>
-        <fieldset style={formStyles.fieldset} className="bn"> 
-          <legend style={formStyles.legend} className="f3 tc">Sign In</legend>
+      <form style={formStyles.form} className="br1 measure-narrow mv4 pa3 shadow-3 center" onSubmit={this.handleSubmitJwtAuth}>
+        <fieldset className="bn"> 
+          <legend className="f3 tc">Sign In</legend>
           <div role='alert'>
             {error && <p className='red'>{error}</p>}
           </div>
 
           {this.createInputs(inputs)}
-          
-          <p className="tc">
-            <button style={formStyles.button} className="ph3 pv2 mb2 tc" type='submit'>Login</button>
-          </p>
+
+          <button style={formStyles.button} className="ph3 pv2 db center" type='submit'>Login</button>
         </fieldset>
       </form>
     )
