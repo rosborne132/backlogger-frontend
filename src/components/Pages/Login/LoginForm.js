@@ -56,6 +56,7 @@ export default class LoginForm extends Component {
           key={input.inputID}
           labelFor={input.labelFor}
           labelText={input.labelText}
+          labelClass={input.labelClass}
           inputType={input.inputType}
           inputName={input.inputName}
           inputID={input.inputID}
@@ -72,6 +73,7 @@ export default class LoginForm extends Component {
       {
         labelFor: 'RegistrationForm__user_name',
         labelText: 'User Name',
+        labelClass: 'flex ml4 pv1',
         inputType: 'text',
         inputName: 'userName',
         inputID: 'RegistrationForm__user_name',
@@ -80,6 +82,7 @@ export default class LoginForm extends Component {
       {
         labelFor: 'RegistrationForm__password',
         labelText: 'Password',
+        labelClass: 'flex ml4 pv1',
         inputType: 'password',
         inputName: 'password',
         inputID: 'RegistrationForm__password',
@@ -92,21 +95,16 @@ export default class LoginForm extends Component {
     }
 
     return (
-      <form style={formStyles.form} onSubmit={this.handleSubmitJwtAuth}>
-        <header>
-          <h3>Test Account</h3>
-          <p>User Name: testUser1</p>
-          <p>Password: testUser1!</p>
-        </header>
-        <fieldset style={formStyles.fieldset}>
-          <legend style={formStyles.legend}>Sign In</legend>
+      <form style={formStyles.form} className="measure-narrow mv3 pa2 shadow-3 center" onSubmit={this.handleSubmitJwtAuth}>
+        <fieldset style={formStyles.fieldset} className="bn"> 
+          <legend style={formStyles.legend} className="f3 code">Sign In</legend>
           <div role='alert'>
             {error && <p className='red'>{error}</p>}
           </div>
 
           {this.createInputs(inputs)}
           
-          <button style={formStyles.button} type='submit'>Login</button>
+          <button style={formStyles.button} className="code ph3 pv2 mb2 dib" type='submit'>Login</button>
         </fieldset>
       </form>
     )

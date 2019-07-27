@@ -1,4 +1,4 @@
-form {
+/* form {
     max-width: 400px;
     display: inline-block;
     margin: 0 auto;
@@ -84,14 +84,9 @@ select {
 
 option {
     width: 100%;
-}
+} */
 
 button {
-    width: 50%;
-    padding: 10px;
-    display: inline-block;
-    border: 1px solid #000;
-    margin: 5px auto; 
     background-color: #fff;
     color: #000;
     background: linear-gradient(to right, white 50%, black 50%);
@@ -106,7 +101,7 @@ button:hover {
     cursor: pointer;
 }
 
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
     form {
         width: 275px;
     }
@@ -123,9 +118,9 @@ button:hover {
     button {
         width: 75%
     }
-}
+} */
 
-@media only screen and (max-width: 500px) {
+/* @media only screen and (max-width: 500px) {
     form {
         width: 250px;
     }
@@ -143,4 +138,4 @@ button:hover {
         width: 150px;
         margin: 0 -20px;
     }
-}
+} */
