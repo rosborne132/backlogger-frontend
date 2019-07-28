@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 
-import formStyles from "../../StyledComponents/Form.modules.css"
 import { ValidationError, Required, InputGroup } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
@@ -200,7 +199,7 @@ class AddGameForm extends Component {
           { this.createTimeDropdown() }
           { this.createNotes() }
           { this.createGameComplete(currentGame) }
-          <button type="submit" disabled={!this.state.formValid} style={formStyles.button} className="ph3 pv2 db center">Submit</button>
+          <button type="submit" disabled={!this.state.formValid} className="black bg-white hover ph3 pv2 db center">Submit</button>
         </fieldset>
       </form>
     )

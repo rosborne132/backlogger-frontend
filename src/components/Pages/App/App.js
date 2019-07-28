@@ -95,7 +95,6 @@ class App extends Component {
     }
 
     createConsoleMain = () => {
-        const { showNav } = this.state
         return (
             <>
                 <main className="fl w-100 w-100-ns pa3">

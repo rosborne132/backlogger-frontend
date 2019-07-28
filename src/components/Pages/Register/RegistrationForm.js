@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 
 import { InputGroup } from '../../Utils/Utils'
-import formStyles from "../../StyledComponents/Form.modules.css"
 import AuthApiService from '../../../services/auth-api-service'
 
 export default class RegistrationForm extends Component {
@@ -161,7 +160,7 @@ export default class RegistrationForm extends Component {
 
           {this.createInputs(inputs)}
 
-          <button style={formStyles.button} className="ph3 pv2 db center" type="submit">Sign Up</button>
+          <button className="black bg-white hover ph3 pv2 db center" type="submit">Sign Up</button>
         </fieldset>
       </form>
     )

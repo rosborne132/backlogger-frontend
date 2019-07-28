@@ -1,19 +1,17 @@
 import React, { memo, PureComponent } from 'react'
-import formStyles from "../StyledComponents/Form.modules.css"
-import './Utils.css'
 
 export const InputGroup = memo(({ labelFor, labelText, inputType, inputClass, inputName, inputID, inputValue, onChange, inputPlaceholder }) => {
   return (
-    <p style={formStyles.p}>
-      <label style={formStyles.label} htmlFor={labelFor} className="flex pv2">{labelText} <Required /></label>
-      <input style={formStyles.input} type={inputType} name={inputName} placeholder={inputPlaceholder} value={inputValue} onChange={onChange} id={inputID} className={`ba b--black-20 pa2 mb2 ${inputClass}`} required />
+    <p>
+      <label htmlFor={labelFor} className="flex pv2">{labelText} <Required /></label>
+      <input type={inputType} name={inputName} placeholder={inputPlaceholder} value={inputValue} onChange={onChange} id={inputID} className={`ba b--black-20 pa2 mb2 ${inputClass}`} required />
     </p>
   )
 })
 
 export function Required({ className, ...props }) {
   return (
-    <span className={['Required', className].join(' ')} {...props}>
+    <span className={['red', className].join(' ')} {...props}>
       &#42;
     </span>
   )
@@ -43,10 +41,8 @@ export class GameError extends PureComponent {
 
 export const ValidationError = memo(({ message }) => {
   return (
-    <>
-      <span className="error">
-        <p>{message}</p>
-      </span>
-    </>
+    <span className="red">
+      <p>{message}</p>
+    </span>
   )
 })

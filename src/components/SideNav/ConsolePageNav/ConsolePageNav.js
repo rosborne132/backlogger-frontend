@@ -1,7 +1,5 @@
 import React, { PureComponent } from "react"
 
-import { Button } from "../../StyledComponents"
-
 import GamesContext from "../../../context/GamesContext"
 
 class ConsolePageNav extends PureComponent {
@@ -20,7 +18,7 @@ class ConsolePageNav extends PureComponent {
 
         return (
             <>
-                <Button onClick={this.props.history.goBack}>Back</Button>
+                <span className ="hover w-100 ba pa2 db tc" onClick={this.props.history.goBack}>Back</span>
 
                 {console && <h3>{console.name}</h3>}
             </>

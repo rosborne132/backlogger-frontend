@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 
-import formStyles from "../../StyledComponents/Form.modules.css"
 import { Required } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
@@ -56,11 +55,7 @@ class AddConsoleForm extends Component {
     }
   }
 
-  formValid() {
-    this.setState({
-      formValid: this.state.consoleValid
-    })
-  }
+  formValid = () => this.setState({ formValid: this.state.consoleValid })
 
   handleSubmit = e => {
     e.preventDefault()
@@ -105,10 +100,10 @@ class AddConsoleForm extends Component {
 
     return (
       <form className="br1 measure mv4 pa3 shadow-3 center"  onSubmit={this.handleSubmit}>
-        <fieldset className="bn" style={formStyles.fieldset}>
+        <fieldset className="bn">
           <legend className="f3 tc">Add a Console</legend>
           { this.createConsoleDropwdown(consoleChoices) }
-          <button type="submit" disabled={!this.state.formValid} style={formStyles.button} className="pa2 mv2 db center">Submit</button>
+          <button type="submit" disabled={!this.state.formValid} className="black bg-white hover pa2 mv2 db center">Submit</button>
         </fieldset>
       </form>
     )

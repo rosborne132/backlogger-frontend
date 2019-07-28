@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import formStyles from "../../StyledComponents/Form.modules.css"
 import { ValidationError, Required, InputGroup } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
@@ -213,7 +212,7 @@ class UpdateGameForm extends Component {
             { this.createNotes(notes) }
             { this.createCheckbox("Current Game:", currentGame, this.updateCurrentGame) }
             { this.createCheckbox("Game Completed?", updateComplete, this.updateGameComplete) }
-            <button type="submit" style={formStyles.button} className="ph3 pv2 db center">Submit</button>
+            <button type="submit" className="black bg-white hover ph3 pv2 db center">Submit</button>
           </fieldset>
         </form>
     );

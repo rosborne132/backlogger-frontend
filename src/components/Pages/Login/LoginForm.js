@@ -3,7 +3,6 @@ import { Redirect } from 'react-router'
 import TokenService from '../../../services/token-service'
 import AuthApiService from '../../../services/auth-api-service'
 
-import formStyles from "../../StyledComponents/Form.modules.css"
 import { InputGroup } from '../../Utils/Utils'
 
 import UserContext from '../../../context/UserContext'
@@ -15,7 +14,7 @@ export default class LoginForm extends Component {
   
   static contextType = UserContext
 
-  state = { 
+  state = {
     userName: "",
     password: "",
     error: null ,
@@ -93,7 +92,7 @@ export default class LoginForm extends Component {
     }
 
     return (
-      <form style={formStyles.form} className="br1 measure-narrow mv4 pa3 shadow-3 center" onSubmit={this.handleSubmitJwtAuth}>
+      <form className="br1 measure-narrow mv4 pa3 shadow-3 center" onSubmit={this.handleSubmitJwtAuth}>
         <fieldset className="bn"> 
           <legend className="f3 tc">Sign In</legend>
           <div role='alert'>
@@ -102,7 +101,7 @@ export default class LoginForm extends Component {
 
           {this.createInputs(inputs)}
 
-          <button style={formStyles.button} className="ph3 pv2 db center" type='submit'>Login</button>
+          <button className="black bg-white hover ph3 pv2 db center" type='submit'>Login</button>
         </fieldset>
       </form>
     )

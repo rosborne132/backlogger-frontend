@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 
-import { LinkButton, Console, List } from '../../StyledComponents'
+import { Console, List } from '../../StyledComponents'
 
 import GamesContext from '../../../context/GamesContext'
 
@@ -39,12 +39,12 @@ class ConsoleList extends PureComponent{
                 </List>
 
                 <Link style={{textDecoration: "none"}} to="/app/addConsole">
-                    <LinkButton>+ Console</LinkButton>
+                    <div className="black bg-white hover w-100 ba pa2 db tc">+ Console</div>
                 </Link>
                 
                 { consoles.length 
                 ? <Link style={{textDecoration: "none"}} to="/app/addGame">
-                    <LinkButton>+ Game</LinkButton>
+                    <div className="black bg-white hover w-100 ba pa2 db tc">+ Game</div>
                   </Link>
                 : "" }
             </>
