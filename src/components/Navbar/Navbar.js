@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import TokenService from '../../services/token-service'
 import UserContext from '../../context/UserContext'
 
@@ -8,6 +8,7 @@ class Navbar extends Component {
     
     handleLogoutClick = () => {
         TokenService.clearAuthToken()
+        this.context.updateLoginStatus()
         this.props.history.push('/')
     }
     
@@ -15,8 +16,8 @@ class Navbar extends Component {
         return (
           <li className="di pa2" style={{marginLeft: "-30px"}}>
             <Link
-              to='/'
               onClick={this.handleLogoutClick}
+              to='/'
               className="no-underline white"
               >
               Logout
@@ -48,4 +49,4 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar
+export default withRouter(Navbar)
