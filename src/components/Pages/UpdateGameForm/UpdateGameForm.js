@@ -141,11 +141,11 @@ class UpdateGameForm extends Component {
     )
   }
 
-  createConsoleDropwdown = consoles => {
+  createConsoleDropwdown = (consoles, consoleId) => {
     return (
       <p>
         <label className="flex pv2" htmlFor="console">Console: <Required /></label>
-        <select className="black bg-white w-100" name="console" onChange={this.updateConsole}>
+        <select className="black bg-white w-100" name="console" value={consoleId} onChange={this.updateConsole}>
           <option>Select your console</option>
           {consoles.map(console => (
             <option key={console.id} value={console.console_id}>{console.title}</option>
@@ -196,7 +196,7 @@ class UpdateGameForm extends Component {
 
   render() {
     const { consoles } = this.context
-    const { title, currentGame, notes, updateGameTime, updateComplete } = this.state
+    const { title, consoleId, currentGame, notes, updateGameTime, updateComplete } = this.state
 
     return (
         <form className="br1 measure mv4 pa3 shadow-3 center" onSubmit={this.handleSubmit}>
@@ -207,7 +207,7 @@ class UpdateGameForm extends Component {
               message={this.state.validationMessages.name}
             />
             { this.createInput(title) }
-            { this.createConsoleDropwdown(consoles) }
+            { this.createConsoleDropwdown(consoles, consoleId) }
             { this.createTimeDropdown(updateGameTime) }
             { this.createNotes(notes) }
             { this.createCheckbox("Current Game:", currentGame, this.updateCurrentGame) }

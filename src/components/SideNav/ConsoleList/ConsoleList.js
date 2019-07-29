@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 
-import { Console, List } from '../../StyledComponents'
-
 import GamesContext from '../../../context/GamesContext'
 
 class ConsoleList extends PureComponent{
@@ -15,36 +13,33 @@ class ConsoleList extends PureComponent{
         const countCompletedGames = (games = []) => games.filter(game => game.is_complete === true).length
         return (
             <>
-                <List>
-                    <NavLink to={`/app`}>
-                        <Console>
-                            <span>{ getAllUncompletedGames(games) }</span>
-                            <span>In The Backlog</span>
-                        </Console>
+                <ul className="w-100 pa0 ma0">
+                    <NavLink className="no-underline" to={`/app`}>
+                        <li className="hover black w-100 ba pa3 tc no-underline">
+                            { getAllUncompletedGames(games) } In The Backlog
+                        </li>
                     </NavLink>
-                    <NavLink to={`/app/console`}>
-                        <Console>
-                            <span>{ countCompletedGames(games) }</span>
-                            <span>Completed Games</span>
-                        </Console>
+                    <NavLink className="no-underline" to={`/app/console`}>
+                        <li className="hover black w-100 ba pa3 db tc">
+                            { countCompletedGames(games) } Completed Games
+                        </li>
                     </NavLink>
                     {consoles.map(console => (
-                        <NavLink to={`/app/console/${console.console_id}`} key={console.console_id}>
-                            <Console>
-                                <span>{ countGamesForConsole(games, console.console_id) }</span>
-                                <span>{ console.title }</span>
-                            </Console>
+                        <NavLink className="no-underline" to={`/app/console/${console.console_id}`} key={console.console_id}>
+                            <li className="hover black w-100 ba pa3 db tc">
+                                { countGamesForConsole(games, console.console_id) } { console.title }
+                            </li>
                         </NavLink>
                     ))}
-                </List>
+                </ul>
 
                 <Link style={{textDecoration: "none"}} to="/app/addConsole">
-                    <div className="black bg-white hover w-100 ba pa2 db tc">+ Console</div>
+                    <div className="black bg-white hover w-100 ba pa3 db tc">+ Console</div>
                 </Link>
                 
                 { consoles.length 
                 ? <Link style={{textDecoration: "none"}} to="/app/addGame">
-                    <div className="black bg-white hover w-100 ba pa2 db tc">+ Game</div>
+                    <div className="black bg-white hover w-100 ba pa3 db tc">+ Game</div>
                   </Link>
                 : "" }
             </>

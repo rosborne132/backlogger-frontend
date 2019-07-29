@@ -4,8 +4,6 @@ import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinusSquare, faPenSquare } from '@fortawesome/free-solid-svg-icons'
 
-import { GameIcons, GameStyles, GameHeader, GameBody } from '../StyledComponents'
-
 import GamesContext from '../../context/GamesContext'
 import GameApiService from "../../services/game-api-service";
 
@@ -23,18 +21,18 @@ class Game extends PureComponent {
   render() {
     const { id, title } = this.props
     return (
-      <GameStyles>
-        <GameHeader>
-          <span>{title}</span>
-        </GameHeader>
+      <div className="grow w-100">
+        <header>
+          <h2 className="tc">{title}</h2>
+        </header>
 
-        <GameBody></GameBody>
+        <div className="w-100 gameCard bg-black"></div>
 
-        <GameIcons>
-            <Link to={`#`} onClick={this.handleDeleteNote}><FontAwesomeIcon style={{color: "#C20500"}} onClick={this.handleDeleteGame} icon={faMinusSquare} /></Link>
-            <Link to={`/app/updateGame/${id}`}><FontAwesomeIcon style={{color: "#00FAAB"}} icon={faPenSquare} /></Link>
-        </GameIcons>
-      </GameStyles>
+        <div className="flex justify-between">
+            <Link to={`#`} className="pv2" onClick={this.handleDeleteNote}><FontAwesomeIcon style={{color: "#C20500", fontSize: "1.3em"}} onClick={this.handleDeleteGame} icon={faMinusSquare} /></Link>
+            <Link to={`/app/updateGame/${id}`} className="pv2"><FontAwesomeIcon style={{color: "#00FAAB", fontSize: "1.3em"}} icon={faPenSquare} /></Link>
+        </div>
+      </div>
     )
   }
 }
