@@ -1,40 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 import TokenService from '../../services/token-service'
 import UserContext from '../../context/UserContext'
-
-const Nav = styled.nav`
-    position: relative;
-    min-height: 50px;
-    padding: 0.1% 0;
-    background-color: #000;
-
-    ul {
-        display: flex;
-        list-style: none;
-    }
-`
-
-const NavLink = styled.li`
-    display: inline;
-    padding: 0 2%;
-
-    a {
-        color: #fff;
-        text-decoration: none;
-        font-size: calc(14px + 0.5vw);
-    }
-
-    a:hover {
-        cursor: pointer;
-        color: rgb(139, 139, 139);
-    }
-
-    @media only screen and (max-width: 350px) {
-        padding: 0 4%;
-    }
-`
 
 class Navbar extends Component {
     static contextType = UserContext
@@ -46,21 +13,23 @@ class Navbar extends Component {
     
     renderLogoutLink = () => {
         return (
-          <NavLink style={{marginLeft: "-30px"}}>
+          <li className="di pa2" style={{marginLeft: "-30px"}}>
             <Link
+              to='/'
               onClick={this.handleLogoutClick}
-              to='/'>
+              className="no-underline white"
+              >
               Logout
             </Link>
-          </NavLink>
+          </li>
         )
     }
     
     renderLoginLink = () => {
         return (
             <>
-                <NavLink style={{marginLeft: "-30px"}}><Link to='/login'>Login</Link></NavLink>
-                <NavLink><Link to='/register'>Signup</Link></NavLink>
+                <li className="di ph2" style={{marginLeft: "-30px"}}><Link to='/login' className="no-underline white">Login</Link></li>
+                <li className="di ph2"><Link to='/register' className="no-underline white">Signup</Link></li>
             </>
         )
     }
@@ -68,13 +37,13 @@ class Navbar extends Component {
     render() {
         const { isLoggedIn } = this.context
         return (
-            <Nav role="navigation">
-                <ul>
+            <nav className="relative vh ph3 pv2 bg-black" role="navigation">
+                <ul className="list flex">
                     {TokenService.hasAuthToken() || isLoggedIn
                         ? this.renderLogoutLink()
                         : this.renderLoginLink()}
                 </ul>
-            </Nav>
+            </nav>
         )
     }
 }

@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 
-import formStyles from "../../StyledComponents/Form.modules.css"
-import { ValidationError, Required } from '../../Utils/Utils'
+import { ValidationError, Required, InputGroup } from '../../Utils/Utils'
 
 import GamesContext from '../../../context/GamesContext'
 import GameApiService from "../../../services/game-api-service";
@@ -116,70 +115,93 @@ class AddGameForm extends Component {
     })
   }
 
+  createInput = () => {
+    return (
+      <InputGroup 
+        labelFor="name"
+        labelText="Name:"
+        inputType="text"
+        inputName="name"
+        inputClass="w-100"
+        inputPlaceholder="Enter Game Name"
+        onChange={this.updateName}
+        />
+    )
+  }
+
+  createConsoleDropwdown = consoles => {
+    return (
+      <p>
+        <label className="flex pv2" htmlFor="console">Console: <Required /></label>
+        <select className="black bg-white w-100" name="console" onChange={this.updateConsole}>
+          <option>Select your console</option>
+          {consoles.map(console => (
+            <option key={console.id} value={console.console_id}>{console.title}</option>
+          ))}
+        </select>
+      </p>
+    )
+  }
+
+  createTimeDropdown = () => {
+    return ( 
+      <p>
+        <label className="flex pv2" htmlFor="gameConsole">Time Expected to Complete:</label>
+        <select className="black bg-white w-100" name="gameConsole" onChange={this.updateGameTime}>
+          <option>Select your time</option>
+          <option value="1-10hrs">1-10hrs</option>
+          <option value="10-20hrs">10-20hrs</option>
+          <option value="20-30hrs">20-30hrs</option>
+          <option value="30-40hrs">30-40hrs</option>
+          <option value="50-60hrs">50-60hrs</option>
+        </select>
+      </p>
+    )
+  }
+
+  createNotes = () => {
+    return (
+      <p>
+        <label className="flex" htmlFor="notes">Notes: </label>
+        <textarea className="ba db b--black-20 pa2 mb2 w-100" onChange={this.updateContent} />
+      </p>
+    )
+  }
+
+  createGameComplete = currentGame => {
+    return (
+      <p className="flex justify-between">
+        <label className="" htmlFor="currentGame">Current Game:</label>
+        <input 
+          type="checkbox"
+          name="currentGame"
+          checked={currentGame}
+          onChange={this.updateCurrentGame}
+          />
+      </p>
+    )
+  }
+
   render() {
     const { consoles } = this.context
+    const { currentGame } = this.state
 
     return (
-      <>
-        <form style={formStyles.form} onSubmit={this.handleSubmit}>
+      <form className="br1 measure mv4 pa3 shadow-3 center" onSubmit={this.handleSubmit}>
+        <fieldset className="bn w-70 center">
+          <legend className="f3 tc">Add a new game to play!</legend>
           <ValidationError
             hasError={!this.state.titleValid}
             message={this.state.validationMessages.name}
           />
-          <fieldset style={formStyles.fieldset}>
-            <legend style={formStyles.legend}>Add a new game to play!</legend>
-            <p>
-              <label style={formStyles.label} htmlFor="name">Name: <Required /></label>
-              <input
-                type="text"
-                placeholder="Enter Note Name"
-                style={formStyles.input}
-                id="name"
-                onChange={this.updateName}
-              />
-            </p>
-
-            <p>
-              <label style={formStyles.label} htmlFor="console">Console: <Required /></label>
-              <select style={formStyles.select} name="console" onChange={this.updateConsole}>
-                <option style={formStyles.option}>Select your console</option>
-                {consoles.map(console => (
-                  <option key={console.id} value={console.console_id}>{console.title}</option>
-                ))}
-              </select>
-            </p>
-
-            <p>
-              <label style={formStyles.label} htmlFor="gameConsole">Time Expected to Complete:</label>
-                <select style={formStyles.select} name="gameConsole" onChange={this.updateGameTime}>
-                  <option>Select your time</option>
-                  <option value="1-10hrs">1-10hrs</option>
-                  <option value="10-20hrs">10-20hrs</option>
-                  <option value="20-30hrs">20-30hrs</option>
-                  <option value="30-40hrs">30-40hrs</option>
-                  <option value="50-60hrs">50-60hrs</option>
-                </select>
-            </p>
-
-            <p>
-              <label style={formStyles.label} htmlFor="notes">Notes: </label>
-              <textarea style={formStyles.textarea} onChange={this.updateContent} />
-            </p>
-
-            <p style={{display: "flex", justifyContent: "space-between"}}>
-              <label style={formStyles.label} htmlFor="currentGame">Current Game:</label>
-              <input 
-                type="checkbox"
-                name="currentGame"
-                className={formStyles.checkbox}
-                checked={this.state.currentGame}
-                onChange={this.updateCurrentGame}
-                />
-            </p>
-          </fieldset>
-          <button type="submit" disabled={!this.state.formValid} style={formStyles.button}>Submit</button>
-        </form>
-      </>
+          { this.createInput() }
+          { this.createConsoleDropwdown(consoles) }
+          { this.createTimeDropdown() }
+          { this.createNotes() }
+          { this.createGameComplete(currentGame) }
+          <button type="submit" disabled={!this.state.formValid} className="black bg-white hover ph3 pv2 db center">Submit</button>
+        </fieldset>
+      </form>
     )
   }
 }

@@ -8,8 +8,6 @@ import GamesContext from '../../../context/GamesContext'
 import ConsoleApiService from '../../../services/console-api-service'
 import GameApiService from '../../../services/game-api-service'
 
-import './App.css'
-
 const GamePageMain  = React.lazy(() => import('../GamePageMain/GamePageMain'))
 const AllGamesPageMain  = React.lazy(() => import('../AllGamesPageMain/AllGamesPageMain'))
 const GameCompletedMain  = React.lazy(() => import('../GameCompletedMain/GameCompletedMain'))
@@ -23,7 +21,8 @@ class App extends Component {
         this.state = {
           consoles: [],
           games: [],
-          error: ""
+          error: "",
+          showNav: true
         }
     }
 
@@ -71,19 +70,25 @@ class App extends Component {
         })
     }
 
+    showNav = () => this.setState({ showNav: !this.state.showNav })
+
     createConsoleNav = () => {
+        const { showNav } = this.state
         return (
             <>
-                <nav className="appNav">
-                    <Switch>
-                        <Route exact path="/app" component={ConsoleList} />
-                        <Route path="/app/console/:consoleId" component={ConsoleList} />
-                        <Route path="/app/console" component={ConsoleList} />
-                        <Route path="/app/game/:gameId" component={ConsolePageNav} />
-                        <Route path="/app/addConsole" component={ConsolePageNav} />
-                        <Route path="/app/addGame" component={ConsolePageNav} />
-                        <Route path="/app/updateGame/:gameId" component={ConsolePageNav} />
-                    </Switch>
+                <nav className="vh-100 dt">
+                    <span className={`fl w-100 ${showNav ? "w-100-ns" : "dn"}`}>
+                        <Switch>
+                            <Route exact path="/app" component={ConsoleList} />
+                            <Route path="/app/console/:consoleId" component={ConsoleList} />
+                            <Route path="/app/console" component={ConsoleList} />
+                            <Route path="/app/game/:gameId" component={ConsolePageNav} />
+                            <Route path="/app/addConsole" component={ConsolePageNav} />
+                            <Route path="/app/addGame" component={ConsolePageNav} />
+                            <Route path="/app/updateGame/:gameId" component={ConsolePageNav} />
+                        </Switch>
+                    </span>
+                    <span className="pointer dtc v-mid tc pa1 b" onClick={this.showNav}>{showNav ? "<" : ">"}</span>
                 </nav>
             </>
         )
@@ -92,7 +97,7 @@ class App extends Component {
     createConsoleMain = () => {
         return (
             <>
-                <main className="appMain">
+                <main className="fl w-100 w-100-ns pa3">
                     <Suspense fallback={<div>Loading...</div>}>
                         <Switch>
                             <Route exact path="/app" component={AllGamesPageMain} />
@@ -121,7 +126,7 @@ class App extends Component {
 
         return (
             <GamesContext.Provider value={contextValue}>
-                <div className="appHomeContainer">
+                <div className="flex center">
                     {this.createConsoleNav()}
                     {this.createConsoleMain()}
                 </div>

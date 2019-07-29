@@ -3,7 +3,6 @@ import { Redirect } from 'react-router'
 import TokenService from '../../../services/token-service'
 import AuthApiService from '../../../services/auth-api-service'
 
-import formStyles from "../../StyledComponents/Form.modules.css"
 import { InputGroup } from '../../Utils/Utils'
 
 import UserContext from '../../../context/UserContext'
@@ -15,7 +14,7 @@ export default class LoginForm extends Component {
   
   static contextType = UserContext
 
-  state = { 
+  state = {
     userName: "",
     password: "",
     error: null ,
@@ -56,6 +55,7 @@ export default class LoginForm extends Component {
           key={input.inputID}
           labelFor={input.labelFor}
           labelText={input.labelText}
+          labelClass={input.labelClass}
           inputType={input.inputType}
           inputName={input.inputName}
           inputID={input.inputID}
@@ -92,21 +92,16 @@ export default class LoginForm extends Component {
     }
 
     return (
-      <form style={formStyles.form} onSubmit={this.handleSubmitJwtAuth}>
-        <header>
-          <h3>Test Account</h3>
-          <p>User Name: testUser1</p>
-          <p>Password: testUser1!</p>
-        </header>
-        <fieldset style={formStyles.fieldset}>
-          <legend style={formStyles.legend}>Sign In</legend>
+      <form className="br1 measure-narrow mv4 pa3 shadow-3 center" onSubmit={this.handleSubmitJwtAuth}>
+        <fieldset className="bn"> 
+          <legend className="f3 tc">Sign In</legend>
           <div role='alert'>
             {error && <p className='red'>{error}</p>}
           </div>
 
           {this.createInputs(inputs)}
-          
-          <button style={formStyles.button} type='submit'>Login</button>
+
+          <button className="black bg-white hover ph3 pv2 db center" type='submit'>Login</button>
         </fieldset>
       </form>
     )
